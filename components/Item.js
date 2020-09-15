@@ -16,7 +16,7 @@ const styles = StyleSheet.create( {
     itemText: {
         flex: 0.75,
         fontSize: PixelRatio.getFontScale() * 40,
-        fontFamily: "Arial, sans-serif", // TODO find portable font solution
+        fontFamily: "Arial", // TODO find portable font solution
         color: "#0e22e1",
     }
 } );
