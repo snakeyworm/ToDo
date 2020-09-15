@@ -6,15 +6,16 @@ import Item from "./Item";
 const styles = StyleSheet.create( {
     list: {
         flex: 1,
-        marginTop: "%5",
+        marginTop: 5,
         backgroundColor: "#ffffff",
     },
 } )
 
 export default function List( props ) {
 
-    const handleRender = useCallback( ( { item } ) =>
+    const handleRender = useCallback( ( { item, index } ) =>
         <Item
+            key={index}
             itemName={item.name}
             checked={item.checked}
         />
