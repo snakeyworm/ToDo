@@ -1,6 +1,7 @@
 
 import React, { useCallback, useState } from "react";
-import { View, TouchableWithoutFeedback, TextInput, StyleSheet, PixelRatio } from "react-native";
+import { Text, View, TouchableWithoutFeedback, TextInput, StyleSheet, PixelRatio } from "react-native";
+import { useFonts } from "expo-font";
 
 const styles = StyleSheet.create( {
     container: {
@@ -16,7 +17,7 @@ const styles = StyleSheet.create( {
     itemText: {
         flex: 0.75,
         fontSize: PixelRatio.getFontScale() * 40,
-        fontFamily: "Arial, sans-serif", // TODO find portable font solution
+        fontFamily: "LemonMilk",
         color: "#0e22e1",
     }
 } );
@@ -34,10 +35,18 @@ export default function Item( props ) {
         setItemName( text );
     } );
 
+    let [ loaded, error ] = useFonts( {
+        LemonMilk: require( "../assets/fonts/LemonMilkRegular-X3XE2.otf" )
+    } );
+
+    if ( !loaded ) {
+        return <Text>{error}</Text> // TODO Find better error handling solution
+    }
+
     return (
         <View style={styles.container}>
             <TouchableWithoutFeedback
-                onPress={handlePress} 
+                onPress={handlePress}
                 onLongPress={handlePress}
             >
                 <View style={{
@@ -55,7 +64,7 @@ export default function Item( props ) {
                 style={styles.itemText}
                 editable={true}
                 onChangeText={handleTextChange}
-                value={itemName}
+                value={loaded ? itemName : error}
             />
         </View>
     );
