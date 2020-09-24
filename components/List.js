@@ -13,8 +13,9 @@ const styles = StyleSheet.create( {
 
 export default function List( props ) {
 
-    const handleRender = useCallback( ( { item } ) =>
+    const handleRender = useCallback( ( { item, index } ) =>
         <Item
+            key={index}
             itemName={item.name}
             checked={item.checked}
         />
