@@ -1,13 +1,13 @@
 
 import React, { useCallback, useState } from "react";
-import { Text, View, TouchableWithoutFeedback, TextInput, StyleSheet, PixelRatio } from "react-native";
+import { Text, View, TouchableWithoutFeedback, TextInput, StyleSheet, PixelRatio,  } from "react-native";
 import { useFonts } from "expo-font";
 
 const styles = StyleSheet.create( {
     container: {
         height: 100,
         flexDirection: "row",
-        backgroundColor: "#7a7a7a",
+        borderRadius: 20,
     },
     checkBox: {
         width: 30,
@@ -17,8 +17,7 @@ const styles = StyleSheet.create( {
     itemText: {
         flex: 0.75,
         fontSize: PixelRatio.getFontScale() * 40,
-        fontFamily: "LemonMilk",
-        color: "#0e22e1",
+        color: "#ffffff",
     }
 } );
 
@@ -39,8 +38,10 @@ export default function Item( props ) {
         LemonMilk: require( "../assets/fonts/LemonMilkRegular-X3XE2.otf" )
     } );
 
+    let fontFamily = "LemonMilk";
+
     if ( !loaded ) {
-        return <Text>{error}</Text> // TODO Find better error handling solution
+        fontFamily = null;
     }
 
     return (
@@ -55,13 +56,16 @@ export default function Item( props ) {
                     alignItems: "center",
                 }}>
                     <View style={{
-                        backgroundColor: checked ? "#00ff00" : "#ffffff",
+                        backgroundColor: checked ? "#ffd700" : "#ffffff",
                         ...styles.checkBox
                     }} />
                 </View>
             </TouchableWithoutFeedback>
             <TextInput
-                style={styles.itemText}
+                style={{
+                    ...styles.itemText,
+                    fontFamily,
+                }}
                 editable={true}
                 onChangeText={handleTextChange}
                 value={loaded ? itemName : error}

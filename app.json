@@ -4,7 +4,8 @@
     "slug": "ToDo",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/todo_icon.png",
+    "icon": "./assets/logos/todo_icon.png",
+    "backgroundColor": "#000000",
     "updates": {
       "fallbackToCacheTimeout": 0
     },

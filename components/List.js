@@ -6,8 +6,7 @@ import Item from "./Item";
 const styles = StyleSheet.create( {
     list: {
         flex: 1,
-        marginTop: "5%",
-        backgroundColor: "#ffffff",
+        backgroundColor: "#000000",
     },
 } )
 

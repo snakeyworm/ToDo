@@ -1,19 +1,31 @@
 
 import React from "react";
-import { View, StyleSheet, } from "react-native"
+import { 
+  View,
+  StyleSheet,
+  StatusBar,
+  KeyboardAvoidingView,
+  Platform,
+} from "react-native"
 import List from "./components/List";
+import ActionBar from "./components/ActionBar";
 
 const styles = StyleSheet.create( {
   container: {
     flex: 1,
-    backgroundColor: "#ffffff",
+    marginTop: "5%",
+    backgroundColor: "#000000",
   }
 } );
 
 export default function App() {
 
   return (
-    <View style={styles.container}>
+    <KeyboardAvoidingView
+      behavior= {Platform.OS == "ios" ? "padding" : "height" }
+      style={styles.container}
+    >
+      <StatusBar backgroundColor={"#000000"} />
       <List data={[
        { name: "Item1", checked: true },
        { name: "Item2", checked: true },
@@ -21,7 +33,8 @@ export default function App() {
        { name: "Item4", checked: true },
        { name: "Item5", checked: false },
       ]}/>
-    </View>
+      <ActionBar />
+    </KeyboardAvoidingView>
   );
 
 }
