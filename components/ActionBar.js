@@ -9,10 +9,11 @@ import {
     Animated,
 } from "react-native";
 
+// TODO Figure out how to maintain View distance from bottom when Keyboard is activated
+
 const styles = StyleSheet.create( {
     container: {
         position: "absolute",
-        top: "90%", // TODO Figure out how to maintain View distance from bottom when Keyboard is activated
         height: 40,
         width: "100%",
         flexDirection: "row-reverse",
