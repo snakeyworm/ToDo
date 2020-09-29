@@ -13,6 +13,7 @@ import ActionBar from "./components/ActionBar";
 const styles = StyleSheet.create( {
   container: {
     flex: 1,
+    flexDirection: "row",
     marginTop: "5%",
     backgroundColor: "#000000",
   }
@@ -22,7 +23,7 @@ export default function App() {
 
   return (
     <KeyboardAvoidingView
-      behavior= {Platform.OS == "ios" ? "padding" : "height" }
+      behavior= {Platform.OS == "ios" ? "padding" : null }
       style={styles.container}
     >
       <StatusBar backgroundColor={"#000000"} />

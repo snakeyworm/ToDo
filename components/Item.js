@@ -1,22 +1,22 @@
 
 import React, { useCallback, useState } from "react";
-import { Text, View, TouchableWithoutFeedback, TextInput, StyleSheet, PixelRatio,  } from "react-native";
+import { Text, View, TouchableWithoutFeedback, TextInput, StyleSheet, PixelRatio, useWindowDimensions } from "react-native";
 import { useFonts } from "expo-font";
 
 const styles = StyleSheet.create( {
     container: {
-        height: 100,
+        // flex: 0.5,
         flexDirection: "row",
         borderRadius: 20,
     },
     checkBox: {
-        width: 30,
-        height: 30,
+        width: PixelRatio.getPixelSizeForLayoutSize( 20 ),
+        height: PixelRatio.getPixelSizeForLayoutSize( 20 ),
         borderRadius: 100,
     },
     itemText: {
         flex: 0.75,
-        fontSize: PixelRatio.getFontScale() * 40,
+        fontSize: PixelRatio.getFontScale() * PixelRatio.getPixelSizeForLayoutSize( 20 ),
         color: "#ffffff",
     }
 } );
