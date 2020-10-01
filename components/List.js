@@ -15,19 +15,25 @@ const styles = StyleSheet.create( {
 // Component for rending user items
 export default function List( props ) {
 
-    const handleRender = useCallback( ( { item, index } ) =>
-        <Item
-            key={index}
+    const getKey = useCallback( ( _, index ) =>
+        `${index}`
+    );
+
+    const handleRender = useCallback( ( { item, index } ) => {
+        // console.log( index );
+        return <Item
+            // id={index}
             itemName={item.name}
             checked={item.checked}
         />
-    );
+    } );
 
     return (
         <FlatList
             style={styles.list}
             data={props.data}
             renderItem={handleRender}
+            keyExtractor={getKey}
         />
     )
 

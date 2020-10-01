@@ -1,5 +1,5 @@
 
-import React, { useEffect, useRef, } from "react";
+import React, { useCallback, } from "react";
 import {
     View,
     TouchableOpacity,
@@ -25,13 +25,17 @@ const styles = StyleSheet.create( {
     plusIcon: {
         width: width*0.15 * 0.75,
         height: width*0.15 * 0.75,
-        marginBottom: height * 0.025,
+        marginBottom: height * 0.01,
     },
 } );
 
 // Container component for app actions
 export default function ActionBar() {
 
+    const addItem = useCallback( () => {
+
+    } );
+    
     return (
         // Container
         <View
@@ -40,10 +44,12 @@ export default function ActionBar() {
             }}
         >
             {/* Add item button */}
-            <Image
-                style={styles.plusIcon}
-                source={require( "../assets/icons/add.png" )}>    
-            </Image>
+            <TouchableOpacity onPress={addItem}>
+                <Image
+                    style={styles.plusIcon}
+                    source={require( "../assets/icons/add.png" )}>    
+                </Image>
+            </TouchableOpacity>
         </View>
     );
 
