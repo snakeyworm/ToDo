@@ -5,7 +5,14 @@ import {
     TouchableOpacity,
     StyleSheet,
     Image,
+    PixelRatio,
+    Dimensions,
 } from "react-native";
+
+// Styling
+
+const width = Dimensions.get( "window" ).width;
+const height = Dimensions.get( "window" ).height;
 
 const styles = StyleSheet.create( {
     container: {
@@ -13,23 +20,26 @@ const styles = StyleSheet.create( {
         flexDirection: "column-reverse",
         alignItems: "center",
         backgroundColor: "#ffd700",
-        borderRadius: 20,
+        borderRadius: width * 0.05,
     },
     plusIcon: {
-        width: "75%",
-        height:  "10%",
-        marginRight: 5,
-    }
+        width: width*0.15 * 0.75,
+        height: width*0.15 * 0.75,
+        marginBottom: height * 0.025,
+    },
 } );
 
+// Container component for app actions
 export default function ActionBar() {
 
     return (
+        // Container
         <View
             style={{
                 ...styles.container,   
             }}
         >
+            {/* Add item button */}
             <Image
                 style={styles.plusIcon}
                 source={require( "../assets/icons/add.png" )}>    
