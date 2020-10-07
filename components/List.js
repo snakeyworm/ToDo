@@ -20,9 +20,7 @@ export default function List( props ) {
     );
 
     const handleRender = useCallback( ( { item, index } ) => {
-        // console.log( index );
         return <Item
-            // id={index}
             itemName={item.name}
             checked={item.checked}
         />

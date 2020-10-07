@@ -30,8 +30,9 @@ const styles = StyleSheet.create( {
 } );
 
 // Container component for app actions
-export default function ActionBar() {
+export default function ActionBar( props ) {
 
+    // TODO Implement item adding functionality
     const addItem = useCallback( () => {
 
     } );
