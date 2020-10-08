@@ -1,5 +1,5 @@
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback, } from "react";
 import {
   StyleSheet,
   StatusBar,
@@ -48,22 +48,29 @@ const getData = async ( key, stateCallback ) => {
 
 };
 
-// TODO Implement user data storage(Use AsyncStorage.getAllKeys())
+// TODO Further integrate AsyncStorage
 // Main component
 export default function App() {
 
   let [ lists, setLists ] = useState( [] );
-  let [ current, setCurrent ] = useState( [] );
+  let [ key, setKey ] = useState( "list1" );
+  let [ currentList, setCurrentList ] = useState( [] );
 
-  storeData(
-    "list1",
-    [
-      { name: "Item1", checked: true },
-      { name: "Item2", checked: true },
-      { name: "Item3", checked: false },
-      { name: "Item4", checked: true },
-      { name: "Item5", checked: false },
-    ] );
+  // TODO Finalize implementation item adding functionality
+  const handleAddItem = useCallback( ( item ) => {
+    
+    setCurrentList( currentList.concat( [ {
+      name: "New item",
+      checked: false,
+    } ] ) );
+
+    // TODO Reconsider this
+    storeData(
+      key,
+      currentList
+    );
+
+  } );
 
   // Retrieve intial data
   useEffect( () => {
@@ -82,9 +89,25 @@ export default function App() {
       }
     } )();
 
-    getData( "list1", setCurrent );
+  } );
 
-  }, [] );
+  // Get new list
+  useEffect( () => {
+    getData( key, setCurrentList );
+  }, [ key ] );
+
+  // Save list
+  useEffect( () => {
+    storeData(
+      key,
+      [
+        { name: "Item1", checked: true },
+        { name: "Item2", checked: true },
+        { name: "Item3", checked: false },
+        { name: "Item4", checked: true },
+        { name: "Item5", checked: false },
+      ] );
+  }, [ key ] );
 
   return (
     // Container
@@ -93,8 +116,8 @@ export default function App() {
       style={styles.container}
     >
       <StatusBar barStyle={"light-content"} backgroundColor={"#000000"} />
-      <List data={current} />
-      <ActionBar />
+      <List data={currentList}  />
+      <ActionBar onAddItem={handleAddItem} />
     </KeyboardAvoidingView>
   );
 

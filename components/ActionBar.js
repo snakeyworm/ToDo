@@ -32,11 +32,6 @@ const styles = StyleSheet.create( {
 // Container component for app actions
 export default function ActionBar( props ) {
 
-    // TODO Implement item adding functionality
-    const addItem = useCallback( () => {
-
-    } );
-    
     return (
         // Container
         <View
@@ -45,7 +40,7 @@ export default function ActionBar( props ) {
             }}
         >
             {/* Add item button */}
-            <TouchableOpacity onPress={addItem}>
+            <TouchableOpacity onPress={props.onAddItem}>
                 <Image
                     style={styles.plusIcon}
                     source={require( "../assets/icons/add.png" )}>    

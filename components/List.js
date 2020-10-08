@@ -19,6 +19,7 @@ export default function List( props ) {
         `${index}`
     );
 
+    // Render item
     const handleRender = useCallback( ( { item, index } ) => {
         return <Item
             itemName={item.name}
