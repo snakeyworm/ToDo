@@ -100,7 +100,7 @@ export default function App() {
       <StatusBar barStyle={"light-content"} backgroundColor={"#000000"} />
       {/* <HomeList keys={keys} /> */}
       <List itemName={"list1"} data={list}/>
-      <ActionBar handlePress={() =>{}} />
+      <ActionBar handlePlus={() => {}} handleHome={() => {}} />
     </KeyboardAvoidingView>
   );
 
