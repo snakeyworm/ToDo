@@ -43,13 +43,19 @@ export default function ActionBar( props ) {
             }}
         >
             {/* Add item button */}
-            <TouchableOpacity onPress={props.handleHome}>
+            <TouchableOpacity 
+                onPress={props.onPlus}
+                onLongPress={props.onPlus}
+            >
                 <Image
                     style={styles.plusIcon}
                     source={require( "../assets/icons/add.png" )}>
                 </Image>
             </TouchableOpacity>
-            <TouchableOpacity onPress={props.handlePlus}>
+            <TouchableOpacity 
+                onPress={props.onHome}
+                onLongPress={props.onHome}
+            >
                 <Image
                     style={styles.homeIcon}
                     source={require( "../assets/icons/home.png" )}>

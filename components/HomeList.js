@@ -1,6 +1,6 @@
 
 import React, { useCallback } from "react";
-import { Text, FlatList, StyleSheet } from "react-native";
+import { FlatList, StyleSheet, TouchableOpacity } from "react-native";
 import Item from "./Item";
 
 const styles = StyleSheet.create( {
@@ -18,11 +18,22 @@ export default function HomeList( props ) {
     );
 
     const handleRender = useCallback( ( { item } ) => {
-        return <Item
-            itemName={item}
-            editable={false}
-        />
-    } );
+
+        const onItemClick = () => {
+            props.onItemClick( item )
+        };
+
+        return ( <TouchableOpacity 
+            onPress={onItemClick}
+            onLongPress={onItemClick}
+        >
+            <Item
+                itemName={item}
+                editable={false}
+            />
+        </TouchableOpacity> );
+        }
+    );
 
     return (
         <FlatList 

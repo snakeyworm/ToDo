@@ -6,12 +6,15 @@ import {
   KeyboardAvoidingView,
   Platform,
   Dimensions,
-  KeyboardAvoidingViewBase
+  AppState,
 } from "react-native"
 import HomeList from "./components/HomeList";
 import List from "./components/List";
 import ActionBar from "./components/ActionBar";
 import AsyncStorage from "@react-native-community/async-storage";
+
+// Name of newly created lists
+const NEW_LIST_NAME = "New list";
 
 // Styling
 
@@ -29,14 +32,24 @@ const styles = StyleSheet.create( {
 // Main component
 export default function App() {
 
+  // State
+
+  // Lists of names of user saved lists
+  let [ savedLists, setSavedLists ] = useState( [] );
+
+  // Name and data of current list
+  let [ name, setName ] = useState( "" );
   let [ list, setList ] = useState( [] );
-  let [ keys, setKeys ] = useState( [] );
+
+  // Is user on homescreen
+  let [ isHome, setIsHome ] = useState( true );
 
   // Method for storing data
   const storeData = async ( key, value ) => {
     try {
       await AsyncStorage.setItem( key, JSON.stringify( value ) )
     } catch ( e ) {
+      console.error( e );
       alert( "Data error(Store)" ); // TODO add better error handling
     }
   }
@@ -57,39 +70,60 @@ export default function App() {
 
   };
 
+  // Create a new list
   const newList = useCallback( () => {
+
+    // Load list into view
+    setName( NEW_LIST_NAME );
+    setList( [] );
+    setIsHome( false );
+
+    // Put new list in data
+    setSavedLists( savedLists.concat( [ NEW_LIST_NAME ] ) );
+    storeData( savedLists.length.toString(), [] );
+    storeData( "saved_lists", savedLists.concat( NEW_LIST_NAME ) ); // Save all list names
     
   } );
 
   const newItem = useCallback( () => {
-
+    console.log( "Adding new item" );
   } );
 
+  const handleHome = useCallback( () => {
+    setIsHome( true );
+  } );
 
   useEffect( () => {
 
+    // Load user data
     ( async () => {
-      try {
-        const keys = await AsyncStorage.getAllKeys();
 
-        if ( keys ) {
-          setKeys( keys );
+      try {
+        const data = await AsyncStorage.getItem( "saved_lists" );
+
+        if ( data ) {
+          setSavedLists( JSON.parse( data ) );
         }
 
       } catch ( e ) {
-        alert( "Data error(Keys)" ); // TODO add better error handling
+        alert( "Data error(Get)" ); // TODO add better error handling
       }
-    } )()
+
+    } )();
 
   }, [] );
 
-  list = [
-    { name: "Item1", checked: true, },
-    { name: "Item2", checked: true, },
-    { name: "Item3", checked: true, },
-    { name: "Item4", checked: true, },
-    { name: "Item5", checked: true, },
-  ];
+  // Simulate
+
+  // name = "list1"
+
+  // list = [
+  //   { name: "Item1", checked: true, },
+  //   { name: "Item2", checked: true, },
+  //   { name: "Item3", checked: true, },
+  //   { name: "Item4", checked: true, },
+  //   { name: "Item5", checked: true, },
+  // ];
 
   return (
     // Container
@@ -97,10 +131,18 @@ export default function App() {
       behavior={Platform.OS == "ios" ? "padding" : null}
       style={styles.container}
     >
-      <StatusBar barStyle={"light-content"} backgroundColor={"#000000"} />
-      {/* <HomeList keys={keys} /> */}
-      <List itemName={"list1"} data={list}/>
-      <ActionBar handlePlus={() => {}} handleHome={() => {}} />
+      <StatusBar
+        barStyle={"light-content"}
+        backgroundColor={"#000000"}
+      />
+      {isHome ?  // TODO Fix display on tablets(Doesn't start at top)
+        <HomeList keys={savedLists} /> :
+        <List name={name} data={list} />
+      }
+      <ActionBar
+        onPlus={isHome ? newList : newItem}
+        onHome={handleHome}
+      />
     </KeyboardAvoidingView>
   );
 

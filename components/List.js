@@ -38,7 +38,7 @@ export default function List( props ) {
         <View
             style={styles.container}
         >
-            <Item
+            <Item // TODO Change styling to look more spiffy
                 style={styles.heading}
                 itemName={props.name}
                 editable={true}
