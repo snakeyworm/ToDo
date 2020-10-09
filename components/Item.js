@@ -42,7 +42,7 @@ export default function Item( props ) {
     }
 
     return (
-        <TextInput
+        <TextInput // TODO Change styling to look more spiffy
             style={{
                 ...styles.itemText,
                 fontFamily,

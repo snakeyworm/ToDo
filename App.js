@@ -25,9 +25,6 @@ const styles = StyleSheet.create( {
   }
 } );
 
-
-
-// TODO Implement user data storage(Use AsyncStorage.getAllKeys())
 // Main component
 export default function App() {
 
