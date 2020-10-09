@@ -1,11 +1,12 @@
 
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import {
   StyleSheet,
   StatusBar,
   KeyboardAvoidingView,
   Platform,
-  Dimensions
+  Dimensions,
+  KeyboardAvoidingViewBase
 } from "react-native"
 import HomeList from "./components/HomeList";
 import List from "./components/List";
@@ -56,6 +57,15 @@ export default function App() {
 
   };
 
+  const newList = useCallback( () => {
+    
+  } );
+
+  const newItem = useCallback( () => {
+
+  } );
+
+
   useEffect( () => {
 
     ( async () => {
@@ -90,7 +100,7 @@ export default function App() {
       <StatusBar barStyle={"light-content"} backgroundColor={"#000000"} />
       {/* <HomeList keys={keys} /> */}
       <List itemName={"list1"} data={list}/>
-      <ActionBar />
+      <ActionBar handlePress={() =>{}} />
     </KeyboardAvoidingView>
   );
 

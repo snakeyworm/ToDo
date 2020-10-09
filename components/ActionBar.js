@@ -5,7 +5,6 @@ import {
     TouchableOpacity,
     StyleSheet,
     Image,
-    PixelRatio,
     Dimensions,
 } from "react-native";
 
@@ -22,6 +21,10 @@ const styles = StyleSheet.create( {
         backgroundColor: "#ffd700",
         borderRadius: width * 0.05,
     },
+    homeIcon: { // TODO find a way to move the home icon up.
+        width: width*0.15 * 0.75,
+        height: width*0.15 * 0.75,
+    },
     plusIcon: {
         width: width*0.15 * 0.75,
         height: width*0.15 * 0.75,
@@ -31,26 +34,28 @@ const styles = StyleSheet.create( {
 
 // Container component for app actions
 export default function ActionBar( props ) {
-
-    // TODO Implement item adding functionality
-    const addItem = useCallback( () => {
-
-    } );
     
     return (
         // Container
         <View
             style={{
-                ...styles.container,   
+                ...styles.container,  
             }}
         >
             {/* Add item button */}
-            <TouchableOpacity onPress={addItem}>
+            <TouchableOpacity onPress={props.handlePress}>
                 <Image
                     style={styles.plusIcon}
-                    source={require( "../assets/icons/add.png" )}>    
+                    source={require( "../assets/icons/add.png" )}>
                 </Image>
             </TouchableOpacity>
+            <TouchableOpacity onPress={props.handlePress}>
+                <Image
+                    style={styles.homeIcon}
+                    source={require( "../assets/icons/home.png" )}>
+                </Image>
+            </TouchableOpacity>
+            
         </View>
     );
 
