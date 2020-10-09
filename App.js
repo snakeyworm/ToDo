@@ -7,6 +7,7 @@ import {
   Platform,
   Dimensions
 } from "react-native"
+import HomeList from "./components/HomeList";
 import List from "./components/List";
 import ActionBar from "./components/ActionBar";
 import AsyncStorage from "@react-native-community/async-storage";
@@ -31,23 +32,16 @@ const styles = StyleSheet.create( {
 export default function App() {
 
   let [ list, setList ] = useState( [] );
+  let [ keys, setKeys ] = useState( [] );
 
   // Method for storing data
   const storeData = async ( key, value ) => {
     try {
       await AsyncStorage.setItem( key, JSON.stringify( value ) )
     } catch ( e ) {
-      alert( "Data error" ); // TODO add better error handling
+      alert( "Data error(Store)" ); // TODO add better error handling
     }
   }
-
-  storeData( [
-    { name: "Item1", checked: true },
-    { name: "Item2", checked: true },
-    { name: "Item3", checked: false },
-    { name: "Item4", checked: true },
-    { name: "Item5", checked: false },
-  ] );
 
   // Method for retrieving data
   const getData = async ( key ) => {
@@ -60,15 +54,35 @@ export default function App() {
       }
 
     } catch ( e ) {
-      alert( "Data error" ); // TODO add better error handling
+      alert( "Data error(Get)" ); // TODO add better error handling
     }
 
   };
 
-  // Retrieve intial data
   useEffect( () => {
-    getData();
-  } );
+
+    ( async () => {
+      try {
+        const keys = await AsyncStorage.getAllKeys();
+
+        if ( keys ) {
+          setKeys( keys );
+        }
+
+      } catch ( e ) {
+        alert( "Data error(Keys)" ); // TODO add better error handling
+      }
+    } )()
+
+  }, [] );
+
+  list = [
+    { name: "Item1", checked: true, },
+    { name: "Item2", checked: true, },
+    { name: "Item3", checked: true, },
+    { name: "Item4", checked: true, },
+    { name: "Item5", checked: true, },
+  ];
 
   return (
     // Container
@@ -77,7 +91,8 @@ export default function App() {
       style={styles.container}
     >
       <StatusBar barStyle={"light-content"} backgroundColor={"#000000"} />
-      <List data={list}/>
+      {/* <HomeList keys={keys} /> */}
+      <List itemName={"list1"} data={list}/>
       <ActionBar />
     </KeyboardAvoidingView>
   );
