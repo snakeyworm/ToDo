@@ -6,7 +6,6 @@ import {
   KeyboardAvoidingView,
   Platform,
   Dimensions,
-  AppState,
 } from "react-native"
 import HomeList from "./components/HomeList";
 import List from "./components/List";
@@ -44,6 +43,8 @@ export default function App() {
   // Is user on homescreen
   let [ isHome, setIsHome ] = useState( true );
 
+  // Data storing methods
+
   // Method for storing data
   const storeData = async ( key, value ) => {
     try {
@@ -70,6 +71,8 @@ export default function App() {
 
   };
 
+  // Event handlers
+
   // Create a new list
   const newList = useCallback( () => {
 
@@ -80,19 +83,31 @@ export default function App() {
 
     // Put new list in data
     setSavedLists( savedLists.concat( [ NEW_LIST_NAME ] ) );
-    storeData( savedLists.length.toString(), [] );
+    storeData( savedLists.length.toString( 16 ), [] );
     storeData( "saved_lists", savedLists.concat( NEW_LIST_NAME ) ); // Save all list names
-    
+
   } );
 
+  // Create new item
   const newItem = useCallback( () => {
     console.log( "Adding new item" );
   } );
 
+  // Go to home screen
   const handleHome = useCallback( () => {
     setIsHome( true );
   } );
 
+  // Open list
+  const handleItemClick = useCallback( ( item ) => {
+
+    setIsHome( false );
+    setName( item )
+    getData( savedLists.indexOf( item ).toString( 16 ) );
+
+  } );
+
+  // Lifecycle
   useEffect( () => {
 
     // Load user data
@@ -136,8 +151,14 @@ export default function App() {
         backgroundColor={"#000000"}
       />
       {isHome ?  // TODO Fix display on tablets(Doesn't start at top)
-        <HomeList keys={savedLists} /> :
-        <List name={name} data={list} />
+        <HomeList
+          keys={savedLists}
+          onItemClick={handleItemClick}
+        /> :
+        <List
+          name={name}
+          data={list}
+        />
       }
       <ActionBar
         onPlus={isHome ? newList : newItem}
