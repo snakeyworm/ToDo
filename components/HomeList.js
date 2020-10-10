@@ -1,6 +1,6 @@
 
 import React, { useCallback } from "react";
-import { Text, FlatList, StyleSheet, TouchableOpacity, PixelRatio, Dimensions } from "react-native";
+import { View, Text, FlatList, StyleSheet, TouchableOpacity, PixelRatio, Dimensions } from "react-native";
 import { useFonts } from "expo-font";
 
 // Styling
@@ -13,8 +13,8 @@ const styles = StyleSheet.create( {
         backgroundColor: "#000000",
     },
     itemContainer: {
-        flex: 1,
-        // padding: 10,
+        width: 10000,
+        padding: 10
     },
     itemText: {
         fontSize: PixelRatio.getFontScale() * width * 0.075,
@@ -48,13 +48,11 @@ export default function HomeList( props ) {
         };
 
         return (
-            <TouchableOpacity
-                onPress={onItemClick}
-                onLongPress={onItemClick}
-                style={{
-                    alignItems: "left",
-                    padding: 10
-                }}
+            <View
+                onStartShouldSetResponder={() => true}
+                onResponderGrant={() => {}} // TODO Maybe add a touch animation here
+                onResponderRelease={onItemClick}
+                style={styles.itemContainer}
             >
                 <Text 
                 style={{
@@ -63,7 +61,7 @@ export default function HomeList( props ) {
                 }}>
                     {item}
                 </Text>
-            </TouchableOpacity>
+            </View>
         );
 
     } );

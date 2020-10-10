@@ -61,7 +61,6 @@ export default function ActionBar( props ) {
                     source={require( "../assets/icons/home.png" )}>
                 </Image>
             </TouchableOpacity>
-            
         </View>
     );
 
