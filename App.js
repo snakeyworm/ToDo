@@ -10,10 +10,6 @@ import {
 import HomeList from "./components/HomeList";
 import List from "./components/List";
 import ActionBar from "./components/ActionBar";
-import AsyncStorage from "@react-native-community/async-storage";
-
-// Name of newly created lists
-const NEW_LIST_NAME = "New list";
 
 // Styling
 
@@ -33,58 +29,17 @@ export default function App() {
 
   // State
 
-  // Lists of names of user saved lists
-  let [ savedLists, setSavedLists ] = useState( [] );
-
-  // Name and data of current list
-  let [ name, setName ] = useState( "" );
-  let [ list, setList ] = useState( [] );
+  const savedLists = [];
+  const name = "Test";
+  const list = []
 
   // Is user on homescreen
   let [ isHome, setIsHome ] = useState( true );
-
-  // Data storing methods
-
-  // Method for storing data
-  const storeData = async ( key, value ) => {
-    try {
-      await AsyncStorage.setItem( key, JSON.stringify( value ) )
-    } catch ( e ) {
-      console.error( e );
-      alert( "Data error(Store)" ); // TODO add better error handling
-    }
-  }
-
-  // Method for retrieving data
-  const getData = async ( key ) => {
-
-    try {
-      const data = await AsyncStorage.getItem( key );
-
-      if ( data ) {
-        setList( JSON.parse( data ) );
-      }
-
-    } catch ( e ) {
-      alert( "Data error(Get)" ); // TODO add better error handling
-    }
-
-  };
 
   // Event handlers
 
   // Create a new list
   const newList = useCallback( () => {
-
-    // Load list into view
-    setName( NEW_LIST_NAME );
-    setList( [] );
-    setIsHome( false );
-
-    // Put new list in data
-    setSavedLists( savedLists.concat( [ NEW_LIST_NAME ] ) );
-    storeData( savedLists.length.toString( 16 ), [] );
-    storeData( "saved_lists", savedLists.concat( NEW_LIST_NAME ) ); // Save all list names
 
   } );
 
@@ -101,44 +56,12 @@ export default function App() {
   // Open list
   const handleItemClick = useCallback( ( item ) => {
 
-    setIsHome( false );
-    setName( item )
-    getData( savedLists.indexOf( item ).toString( 16 ) );
-
   } );
 
   // Lifecycle
   useEffect( () => {
 
-    // Load user data
-    ( async () => {
-
-      try {
-        const data = await AsyncStorage.getItem( "saved_lists" );
-
-        if ( data ) {
-          setSavedLists( JSON.parse( data ) );
-        }
-
-      } catch ( e ) {
-        alert( "Data error(Get)" ); // TODO add better error handling
-      }
-
-    } )();
-
   }, [] );
-
-  // Simulate
-
-  // name = "list1"
-
-  // list = [
-  //   { name: "Item1", checked: true, },
-  //   { name: "Item2", checked: true, },
-  //   { name: "Item3", checked: true, },
-  //   { name: "Item4", checked: true, },
-  //   { name: "Item5", checked: true, },
-  // ];
 
   return (
     // Container
