@@ -32,6 +32,7 @@ const styles = StyleSheet.create( {
   }
 } );
 
+// TODO Add delete and rename features.
 // Main component
 export default function App() {
 
@@ -50,23 +51,25 @@ export default function App() {
   // Create a new list
   const newList = useCallback( async () => {
 
-      const key = savedLists.length.toString( 16 );
+    const key = savedLists.length.toString( 16 );
 
-      setSavedLists(
-        savedLists.concat( [
-          new UserList(
-            NEW_LIST_NAME,
-            key,
-          )
-        ] )
-      );
+    const newSavedlist = savedLists.concat( [
+      new UserList(
+        NEW_LIST_NAME,
+        key,
+      )
+    ] );
 
-      // TODO Eventually remove boilerplate code 
-      try {
-        await AsyncStorage.setItem( key, JSON.stringify( [] ) );
-      } catch ( e ) {
-        console.error( e ); // TODO Add better error handling
-      }
+    setSavedLists( newSavedlist );
+
+    // TODO Eventually remove boilerplate code 
+    // Save data in AsyncStorage
+    try {
+      await AsyncStorage.setItem( "saved_lists", JSON.stringify( newSavedlist ) );
+      await AsyncStorage.setItem( key, JSON.stringify( [] ) );
+    } catch ( e ) {
+      console.error( e ); // TODO Add better error handling
+    }
 
   } );
 
@@ -122,14 +125,14 @@ export default function App() {
   useEffect( () => {
 
 
-    ( async () => {
-      // TODO Remove when done testing
-      try {
-        await AsyncStorage.clear();
-      } catch ( e ) {
-        console.error( e );
-      }
-    } )();
+    // ( async () => {
+    //   // TODO Remove when done testing
+    //   try {
+    //     await AsyncStorage.clear();
+    //   } catch ( e ) {
+    //     console.error( e );
+    //   }
+    // } )();
 
     ( async () => {
       try {
