@@ -59,7 +59,7 @@ export default function HomeList( props ) {
                     ...styles.itemText,
                     fontFamily,
                 }}>
-                    {item}
+                    {item.name}
                 </Text>
             </View>
         );

@@ -40,7 +40,7 @@ export default function List( props ) {
         >
             <Item // TODO Change styling to look more spiffy
                 style={styles.heading}
-                itemName={props.name}
+                itemName={props.list.name}
                 editable={true}
             />
             <FlatList
