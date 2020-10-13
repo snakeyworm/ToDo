@@ -46,6 +46,8 @@ export default function App() {
   // Is user on homescreen
   let [ isHome, setIsHome ] = useState( true );
 
+  const [ reRender, setReRender ] = useState( false );
+
   // Event handlers
 
   // Create a new list
@@ -77,7 +79,6 @@ export default function App() {
   const deleteList = useCallback( async () => {
 
     const key = list.key;
-    console.log( savedLists.indexOf( list ) )
     savedLists.splice( savedLists.indexOf( list ), 1 );
 
     setList( {} );
@@ -118,8 +119,22 @@ export default function App() {
     }
   } );
 
-  const deleteItem = useCallback( async () => {
-    
+  // Delete the given item TODO Further integrate deleteItem
+  const deleteItem = useCallback( async ( item ) => {
+
+    item = listData[0];
+
+    listData.splice( listData.indexOf( item ), 1 );
+    setListData( listData );
+    setReRender( !reRender ); // Force re-render
+
+    // Delete item in AsyncStorage
+    try {
+      await AsyncStorage.setItem( list.key, JSON.stringify( listData ) );
+    } catch ( e ) {
+      console.error( e ); // TODO Add better error handling
+    }
+
   } );
 
   // Go to home screen
@@ -200,6 +215,7 @@ export default function App() {
       <ActionBar
         onPlus={isHome ? newList : newItem}
         onHome={handleHome}
+        // onDelete={deleteList}
         onDelete={deleteList}
       />
     </KeyboardAvoidingView>
