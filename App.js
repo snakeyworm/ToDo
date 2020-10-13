@@ -42,63 +42,56 @@ export default function App() {
   let [ list, setList ] = useState( {} );
   let [ listData, setListData ] = useState( [] );
 
-  // Dummy Data
-  // const name = "Test";
-  // const list = [];
-
   // Is user on homescreen
   let [ isHome, setIsHome ] = useState( true );
 
   // Event handlers
 
   // Create a new list
-  const newList = useCallback( () => {
+  const newList = useCallback( async () => {
 
-    const key = savedLists.length.toString( 16 );
+      const key = savedLists.length.toString( 16 );
 
-    setSavedLists(
-      savedLists.concat( [
-        new UserList(
-          NEW_LIST_NAME,
-          key,
-        )
-      ] )
-    );
+      setSavedLists(
+        savedLists.concat( [
+          new UserList(
+            NEW_LIST_NAME,
+            key,
+          )
+        ] )
+      );
 
-    // TODO Remove boilerplate code eventually
-    ( async () => {
-
+      // TODO Eventually remove boilerplate code 
       try {
         await AsyncStorage.setItem( key, JSON.stringify( [] ) );
       } catch ( e ) {
         console.error( e ); // TODO Add better error handling
       }
 
-    } )();
-
   } );
 
   // Create new item
-  const newItem = useCallback( () => {
-
-    const newListData = savedLists.concat(
-      new UserList(
-        NEW_ITEM_NAME,
-        false,
-      )
-    )
-
-    setSavedLists( newListData );
-
+  const newItem = useCallback( async () => {
     // TODO Remove boilerplate code eventually
-    ( async () => {
-      try {
-        await AsyncStorage.setItem( list.key, newListData ); // TODO THE KEY HERE IS NOT A STRING
-      } catch ( e ) {
-        console.error( e ); // TODO Add better error handling
-      }
-    } )();
+    try {
 
+      const newListData = listData.concat(
+        new UserItem(
+          NEW_ITEM_NAME,
+          false,
+        )
+      )
+
+      setListData( newListData );
+
+      await AsyncStorage.setItem(
+        list.key,
+        JSON.stringify( newListData )
+      );
+
+    } catch ( e ) {
+      console.error( e ); // TODO Add better error handling
+    }
   } );
 
   // Go to home screen
@@ -107,35 +100,30 @@ export default function App() {
   } );
 
   // Open list
-  const handleItemClick = useCallback( ( item ) => {
+  const handleItemClick = useCallback( async ( item ) => {
+    try {
 
-    setList( item );
+      const data = await AsyncStorage.getItem( item.key );
 
-    ( async () => {
-      try {
-
-        const data = await AsyncStorage.getItem( item.key );
-
-        if ( data ) {
-          setListData( JSON.parse( data ) );
-        } else {
-          console.error( "List not found" ); // TODO Add better error handling
-        }
-
-      } catch ( e ) {
-        console.error( e ); // TODO Add better error handling
+      if ( data ) {
+        setList( item );
+        setListData( JSON.parse( data ) );
+        setIsHome( false );
+      } else {
+        console.error( "List not found" ); // TODO Add better error handling
       }
-    } )();
 
-    setIsHome( false );
-
+    } catch ( e ) {
+      console.error( e ); // TODO Add better error handling
+    }
   } );
 
   // Lifecycle
   useEffect( () => {
 
-    // TODO Remove when done testing
+
     ( async () => {
+      // TODO Remove when done testing
       try {
         await AsyncStorage.clear();
       } catch ( e ) {
