@@ -32,7 +32,7 @@ const styles = StyleSheet.create( {
   }
 } );
 
-// TODO Add delete and rename features.
+// TODO Add delete and rename features. Also allow a list's checkability to be saved
 // Main component
 export default function App() {
 
@@ -53,20 +53,41 @@ export default function App() {
 
     const key = savedLists.length.toString( 16 );
 
-    const newSavedlist = savedLists.concat( [
+    const newSavedList = savedLists.concat( [
       new UserList(
         NEW_LIST_NAME,
         key,
       )
     ] );
 
-    setSavedLists( newSavedlist );
+    setSavedLists( newSavedList );
 
     // TODO Eventually remove boilerplate code 
     // Save data in AsyncStorage
     try {
-      await AsyncStorage.setItem( "saved_lists", JSON.stringify( newSavedlist ) );
+      await AsyncStorage.setItem( "saved_lists", JSON.stringify( newSavedList ) );
       await AsyncStorage.setItem( key, JSON.stringify( [] ) );
+    } catch ( e ) {
+      console.error( e ); // TODO Add better error handling
+    }
+
+  } );
+
+  // Delete a list
+  const deleteList = useCallback( async () => {
+
+    const key = list.key;
+    console.log( savedLists.indexOf( list ) )
+    savedLists.splice( savedLists.indexOf( list ), 1 );
+
+    setList( {} );
+    setListData( [] );
+    setSavedLists( savedLists );
+    setIsHome( true );
+
+    try {
+      await AsyncStorage.removeItem( key );
+      await AsyncStorage.setItem( "saved_lists", JSON.stringify( savedLists ) );
     } catch ( e ) {
       console.error( e ); // TODO Add better error handling
     }
@@ -83,7 +104,7 @@ export default function App() {
           NEW_ITEM_NAME,
           false,
         )
-      )
+      );
 
       setListData( newListData );
 
@@ -95,6 +116,10 @@ export default function App() {
     } catch ( e ) {
       console.error( e ); // TODO Add better error handling
     }
+  } );
+
+  const deleteItem = useCallback( async () => {
+    
   } );
 
   // Go to home screen
@@ -124,15 +149,14 @@ export default function App() {
   // Lifecycle
   useEffect( () => {
 
-
-    // ( async () => {
-    //   // TODO Remove when done testing
-    //   try {
-    //     await AsyncStorage.clear();
-    //   } catch ( e ) {
-    //     console.error( e );
-    //   }
-    // } )();
+    // TODO Remove when done testing
+    ( async () => {
+      try {
+        await AsyncStorage.clear();
+      } catch ( e ) {
+        console.error( e );
+      }
+    } )();
 
     ( async () => {
       try {
@@ -176,6 +200,7 @@ export default function App() {
       <ActionBar
         onPlus={isHome ? newList : newItem}
         onHome={handleHome}
+        onDelete={deleteList}
       />
     </KeyboardAvoidingView>
   );

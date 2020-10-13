@@ -21,14 +21,9 @@ const styles = StyleSheet.create( {
         backgroundColor: "#ffd700",
         borderRadius: width * 0.05,
     },
-    homeIcon: { // TODO find a way to move the home icon up.
+    icon: {
         width: width*0.15 * 0.75,
         height: width*0.15 * 0.75,
-    },
-    plusIcon: {
-        width: width*0.15 * 0.75,
-        height: width*0.15 * 0.75,
-        marginBottom: height * 0.01,
     },
 } );
 
@@ -48,7 +43,10 @@ export default function ActionBar( props ) {
                 onLongPress={props.onPlus}
             >
                 <Image
-                    style={styles.plusIcon}
+                    style={{
+                        ...styles.icon,
+                        marginBottom: height * 0.01,
+                    }}
                     source={require( "../assets/icons/add.png" )}>
                 </Image>
             </TouchableOpacity>
@@ -56,9 +54,18 @@ export default function ActionBar( props ) {
                 onPress={props.onHome}
                 onLongPress={props.onHome}
             >
-                <Image
-                    style={styles.homeIcon}
+                <Image // TODO find a way to move the home icon up.
+                    style={styles.icon}
                     source={require( "../assets/icons/home.png" )}>
+                </Image>
+            </TouchableOpacity>
+            <TouchableOpacity 
+                onPress={props.onDelete}
+                onLongPress={props.onDelete}
+            >
+                <Image // TODO find a way to move the home icon up.
+                    style={styles.icon}
+                    source={require( "../assets/icons/trash.png" )}>
                 </Image>
             </TouchableOpacity>
         </View>
