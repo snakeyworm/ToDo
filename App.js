@@ -1,5 +1,5 @@
 
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState, } from "react";
 import {
   StyleSheet,
   StatusBar,
@@ -32,7 +32,9 @@ const styles = StyleSheet.create( {
   }
 } );
 
-// TODO Add delete and rename features. Also allow a list's checkability to be saved
+// TODO Add rename features. Also allow a list's checkability to be saved
+// TODO Make the actions more noticable to the user(Sounds/animations)
+// TODO Review variable names and look for better options
 // Main component
 export default function App() {
 
@@ -210,12 +212,12 @@ export default function App() {
         <List
           list={list}
           data={listData}
+          onDeleteItem={deleteItem}
         />
       }
       <ActionBar
         onPlus={isHome ? newList : newItem}
         onHome={handleHome}
-        // onDelete={deleteList}
         onDelete={deleteList}
       />
     </KeyboardAvoidingView>

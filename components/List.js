@@ -31,6 +31,7 @@ export default function List( props ) {
             itemName={item.name}
             checked={item.checked}
             editable={true}
+            onLongPress={props.onDeleteItem}
         />
     } );
 

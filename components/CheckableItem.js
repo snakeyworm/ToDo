@@ -31,13 +31,19 @@ export default function CheckableItem( props ) {
         setChecked( !checked );
     } );
 
+    // Handle long press
+    const handleLongPress = useCallback( () => {
+        setChecked( !checked );
+        props.onLongPress();
+    } );
+
     return (
         // Container
         <View style={styles.container}>
             {/* Toggle button */}
             <TouchableWithoutFeedback
                 onPress={handlePress}
-                onLongPress={handlePress}
+                onLongPress={handleLongPress}
             >
                 <View style={{
                     flex: 0.2,

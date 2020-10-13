@@ -1,12 +1,11 @@
 
-import React, { useCallback, useState } from "react";
-import { TextInput, StyleSheet, PixelRatio, Dimensions } from "react-native";
+import React, { useCallback, useState, } from "react";
+import { TextInput, StyleSheet, PixelRatio, Dimensions, } from "react-native";
 import { useFonts } from "expo-font";
 
 // Styling
 
 const width = Dimensions.get( "window" ).width;
-const height = Dimensions.get( "window" ).height;
 
 const styles = StyleSheet.create( {
     itemText: {
