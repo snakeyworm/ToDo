@@ -1,10 +1,11 @@
 
 class UserItem {
 
-    constructor( name, checked ) {
+    constructor( name, checked, UUID ) {
 
         this.name = name;
         this.checked = checked;
+        this.UUID = UUID;
 
     }
 

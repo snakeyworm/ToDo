@@ -63,7 +63,7 @@ export default function ActionBar( props ) {
                 onPress={props.onDelete}
                 onLongPress={props.onDelete}
             >
-                <Image // TODO find a way to move the home icon up.
+                <Image
                     style={styles.icon}
                     source={require( "../assets/icons/trash.png" )}>
                 </Image>

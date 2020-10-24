@@ -32,6 +32,7 @@ const styles = StyleSheet.create( {
   }
 } );
 
+// TODO Fix bug where trash can causes error if clicked while not on a list
 // TODO Add rename features. Also allow a list's checkability to be saved
 // TODO Make the actions more noticable to the user(Sounds/animations)
 // TODO Review variable names and look for better options
@@ -106,8 +107,11 @@ export default function App() {
         new UserItem(
           NEW_ITEM_NAME,
           false,
+          list.nextUUID.toString()
         )
       );
+
+      list.nextUUID++;
 
       setListData( newListData );
 
@@ -124,9 +128,7 @@ export default function App() {
   // Delete the given item TODO Further integrate deleteItem
   const deleteItem = useCallback( async ( item ) => {
 
-    item = listData[0];
-
-    listData.splice( listData.indexOf( item ), 1 );
+    listData.splice( listData.indexOf( item ), 1 )
     setListData( listData );
     setReRender( !reRender ); // Force re-render
 

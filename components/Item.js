@@ -39,7 +39,7 @@ export default function Item( props ) {
     if ( !loaded ) {
         fontFamily = null;
     }
-
+    
     return (
         <TextInput
             style={{

@@ -20,6 +20,7 @@ const styles = StyleSheet.create( {
     },
 } );
 
+// TODO Fix bug where spacing is messed up when text is being changed
 // Component for item in checkable item
 export default function CheckableItem( props ) {
 

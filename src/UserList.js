@@ -5,6 +5,7 @@ class UserList {
 
         this.name = name;
         this.key = key;
+        this.nextUUID = 0;
 
     }
 

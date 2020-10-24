@@ -22,16 +22,14 @@ const styles = StyleSheet.create( {
 // Component for rending user items
 export default function List( props ) {
 
-    const getKey = useCallback( ( _, index ) =>
-        `${index}`
-    );
+    const getKey = useCallback( ( item ) => `${item.UUID}` );
 
     const handleRender = useCallback( ( { item } ) => {
         return <CheckableItem
             itemName={item.name}
             checked={item.checked}
             editable={true}
-            onLongPress={props.onDeleteItem}
+            onLongPress={() => {props.onDeleteItem( item ) }}
         />
     } );
 
