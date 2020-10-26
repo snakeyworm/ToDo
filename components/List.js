@@ -29,8 +29,9 @@ export default function List( props ) {
             itemName={item.name}
             checked={item.checked}
             editable={true}
-            onLongPress={() => {props.onDeleteItem( item ) }}
-            onRename={( newName ) => { props.onItemRename( item, newName  ) } }
+            onLongPress={() => { props.onDeleteItem( item ) }}
+            onRename={( newName ) => { props.onItemRename( item, newName ) }}
+            onCheck={() => { props.onCheck( item ) }}
         />
     } );
 

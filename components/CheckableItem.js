@@ -30,6 +30,7 @@ export default function CheckableItem( props ) {
     // Handle press
     const handlePress = useCallback( () => {
         setChecked( !checked );
+        props.onCheck();
     } );
 
     // Handle long press
