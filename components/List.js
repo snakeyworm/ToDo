@@ -29,7 +29,9 @@ export default function List( props ) {
             itemName={item.name}
             checked={item.checked}
             editable={true}
-            onLongPress={() => {props.onDeleteItem( item ) }}
+            onLongPress={() => { props.onDeleteItem( item ) }}
+            onRename={( newName ) => { props.onItemRename( item, newName ) }}
+            onCheck={() => { props.onCheck( item ) }}
         />
     } );
 
@@ -41,6 +43,7 @@ export default function List( props ) {
                 style={styles.heading}
                 itemName={props.list.name}
                 editable={true}
+                onRename={( newName ) => { props.onListRename( newName ) }}
             />
             <FlatList
                 style={styles.list}

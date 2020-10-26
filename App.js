@@ -6,6 +6,7 @@ import {
   KeyboardAvoidingView,
   Platform,
   Dimensions,
+  TextInputComponent,
 } from "react-native"
 import HomeList from "./components/HomeList";
 import List from "./components/List";
@@ -33,9 +34,12 @@ const styles = StyleSheet.create( {
 } );
 
 // TODO Fix bug where trash can causes error if clicked while not on a list
-// TODO Add rename features. Also allow a list's checkability to be saved
+// TODO Reject new names that are not valid(e.g. "" or a super long string)
 // TODO Make the actions more noticable to the user(Sounds/animations)
 // TODO Review variable names and look for better options
+// TODO Consider performance optimizations in the future
+//      Maybe have a useEffect that updates all data when a state variable
+//      is changed.
 // Main component
 export default function App() {
 
@@ -141,6 +145,61 @@ export default function App() {
 
   } );
 
+  // Rename an item
+  const renameItem = useCallback( async ( item, newName ) => {
+
+    // Rename item
+    item.name = newName;
+
+    // Rename item in stroage
+    try {
+
+      await AsyncStorage.setItem(
+        list.key,
+        JSON.stringify( listData )
+      );
+
+    } catch ( e ) {
+      console.error( e ); // TODO Add better error handling
+    }
+
+  } );
+
+  // Rename a list
+  const renameList = useCallback( async ( newName ) => {
+
+    // Rename list in storage
+    list.name = newName;
+
+    // Rename list in storage
+    try {
+      await AsyncStorage.setItem( "saved_lists", JSON.stringify( savedLists ) );
+    } catch ( e ) {
+      console.error( e ) // TODO Add better error handling
+    }
+
+  } );
+
+  // Check an item
+  const checkItem = useCallback( async ( item ) => {
+
+
+
+    // Check item
+    item.checked = !item.checked;
+
+    // Check item in storage
+    try {
+      await AsyncStorage.setItem(
+        list.key,
+        JSON.stringify( listData )
+      );
+    } catch ( e ) {
+      console.error( e ); // TODO Add better error handling
+    }
+
+  } );
+
   // Go to home screen
   const handleHome = useCallback( () => {
     setIsHome( true );
@@ -168,14 +227,14 @@ export default function App() {
   // Lifecycle
   useEffect( () => {
 
-    // TODO Remove when done testing
-    ( async () => {
-      try {
-        await AsyncStorage.clear();
-      } catch ( e ) {
-        console.error( e );
-      }
-    } )();
+    // // TODO Remove when done testing
+    // ( async () => {
+    //   try {
+    //     await AsyncStorage.clear();
+    //   } catch ( e ) {
+    //     console.error( e );
+    //   }
+    // } )();
 
     ( async () => {
       try {
@@ -215,6 +274,9 @@ export default function App() {
           list={list}
           data={listData}
           onDeleteItem={deleteItem}
+          onListRename={renameList}
+          onItemRename={renameItem}
+          onCheck={checkItem}
         />
       }
       <ActionBar

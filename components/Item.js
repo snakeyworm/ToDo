@@ -26,6 +26,7 @@ export default function Item( props ) {
 
     const handleTextChange = useCallback( ( text ) => {
         setItemName( text );
+        props.onRename( text );
     } );
 
     // Load fonts

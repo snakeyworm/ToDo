@@ -30,6 +30,7 @@ export default function CheckableItem( props ) {
     // Handle press
     const handlePress = useCallback( () => {
         setChecked( !checked );
+        props.onCheck();
     } );
 
     // Handle long press
@@ -61,6 +62,7 @@ export default function CheckableItem( props ) {
             <Item 
                 itemName={props.itemName}
                 editable={props.editable}
+                onRename={props.onRename}
             />
         </View>
     );
