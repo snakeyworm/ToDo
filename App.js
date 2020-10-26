@@ -119,9 +119,16 @@ export default function App() {
 
       setListData( newListData );
 
+      // Save list in storage
       await AsyncStorage.setItem(
         list.key,
         JSON.stringify( newListData )
+      );
+
+      // Save list metadata in storage
+      await AsyncStorage.setItem(
+        "saved_lists",
+        JSON.stringify( savedLists ),
       );
 
     } catch ( e ) {
@@ -225,14 +232,14 @@ export default function App() {
   // Lifecycle
   useEffect( () => {
 
-    // // TODO Remove when done testing
-    // ( async () => {
-    //   try {
-    //     await AsyncStorage.clear();
-    //   } catch ( e ) {
-    //     console.error( e );
-    //   }
-    // } )();
+    // TODO Remove when done testing
+    ( async () => {
+      try {
+        await AsyncStorage.clear();
+      } catch ( e ) {
+        console.error( e );
+      }
+    } )();
 
     ( async () => {
       try {
