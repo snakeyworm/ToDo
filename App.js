@@ -219,8 +219,8 @@ export default function App() {
       }
       <ActionBar
         onPlus={isHome ? newList : newItem}
-        onHome={handleHome}
-        onDelete={deleteList}
+        onHome={isHome ? null : handleHome}
+        onDelete={isHome ? null : deleteList }
       />
     </KeyboardAvoidingView>
   );

@@ -50,6 +50,8 @@ export default function ActionBar( props ) {
                     source={require( "../assets/icons/add.png" )}>
                 </Image>
             </TouchableOpacity>
+            {
+            props.onHome ? 
             <TouchableOpacity 
                 onPress={props.onHome}
                 onLongPress={props.onHome}
@@ -58,7 +60,11 @@ export default function ActionBar( props ) {
                     style={styles.icon}
                     source={require( "../assets/icons/home.png" )}>
                 </Image>
-            </TouchableOpacity>
+            </TouchableOpacity> :
+            null
+            }
+            {
+            props.onDelete ?
             <TouchableOpacity 
                 onPress={props.onDelete}
                 onLongPress={props.onDelete}
@@ -67,7 +73,9 @@ export default function ActionBar( props ) {
                     style={styles.icon}
                     source={require( "../assets/icons/trash.png" )}>
                 </Image>
-            </TouchableOpacity>
+            </TouchableOpacity> :
+            null
+            }
         </View>
     );
 
