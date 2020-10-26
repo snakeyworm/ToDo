@@ -183,8 +183,6 @@ export default function App() {
   // Check an item
   const checkItem = useCallback( async ( item ) => {
 
-
-
     // Check item
     item.checked = !item.checked;
 
