@@ -28,12 +28,11 @@ const styles = StyleSheet.create( {
   container: {
     flex: 1,
     flexDirection: "row",
-    marginTop: height * 0.05,
+    marginTop: height * 0.04,
     backgroundColor: "#000000",
   }
 } );
 
-// TODO Fix bug where trash can causes error if clicked while not on a list
 // TODO Reject new names that are not valid(e.g. "" or a super long string)
 // TODO Make the actions more noticable to the user(Sounds/animations)
 // TODO Review variable names and look for better options
@@ -270,7 +269,7 @@ export default function App() {
         barStyle={"light-content"}
         backgroundColor={"#000000"}
       />
-      {isHome ?  // TODO Fix display on tablets(Doesn't start at top)
+      {isHome ?
         <HomeList
           keys={savedLists}
           onItemClick={handleItemClick}

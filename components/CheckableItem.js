@@ -10,6 +10,7 @@ const height = Dimensions.get( "window" ).height;
 
 const styles = StyleSheet.create( {
     container: {
+        // flex: 1,
         height: height * 0.1,
         flexDirection: "row",
     },
@@ -20,7 +21,6 @@ const styles = StyleSheet.create( {
     },
 } );
 
-// TODO Fix bug where spacing is messed up when text is being changed
 // Component for item in checkable item
 export default function CheckableItem( props ) {
 
@@ -48,7 +48,7 @@ export default function CheckableItem( props ) {
                 onLongPress={handleLongPress}
             >
                 <View style={{
-                    flex: 0.2,
+                    width: width * 0.1,
                     justifyContent: "center",
                     alignItems: "center",
                 }}>
@@ -59,7 +59,11 @@ export default function CheckableItem( props ) {
                 </View>
             </TouchableWithoutFeedback>
             {/* Name field*/ }
-            <Item 
+            <Item
+                style={{
+                    width: width * 0.5,
+                    marginLeft: width * 0.025,
+                }}
                 itemName={props.itemName}
                 editable={props.editable}
                 onRename={props.onRename}

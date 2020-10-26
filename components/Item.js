@@ -15,7 +15,6 @@ const styles = StyleSheet.create( {
     }
 } );
 
-// TODO Add onNameChange prop to propogate name changes to <App>
 // Component for item in non-checkable item
 export default function Item( props ) {
 
