@@ -14,6 +14,7 @@ import ActionBar from "./components/ActionBar";
 import UserList from "./src/UserList";
 import UserItem from "./src/UserItem";
 import AsyncStorage from "@react-native-community/async-storage";
+import { Audio } from "expo-av";
 
 // Constants
 
@@ -92,9 +93,15 @@ export default function App() {
     setSavedLists( savedLists );
     setIsHome( true );
 
+    const sound = new Audio.Sound();
+
     try {
       await AsyncStorage.removeItem( key );
       await AsyncStorage.setItem( "saved_lists", JSON.stringify( savedLists ) );
+
+      await sound.loadAsync( require( "./assets/sounds/paper_crumple.mp3" ) );
+      await sound.playAsync();
+
     } catch ( e ) {
       console.error( e ); // TODO Add better error handling
     }
@@ -286,7 +293,7 @@ export default function App() {
       <ActionBar
         onPlus={isHome ? newList : newItem}
         onHome={isHome ? null : handleHome}
-        onDelete={isHome ? null : deleteList }
+        onDelete={isHome ? null : deleteList}
       />
     </KeyboardAvoidingView>
   );
