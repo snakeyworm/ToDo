@@ -34,9 +34,8 @@ const styles = StyleSheet.create( {
   }
 } );
 
-// TODO Reject new names that are not valid(e.g. "" or a super long string)
 // TODO Make the actions more noticable to the user(Sounds/animations)
-// TODO Review variable names and look for better options
+// TODO Make app look cleaner
 // TODO Consider performance optimizations in the future
 //      Maybe have a useEffect that updates all data when a state variable
 //      is changed.

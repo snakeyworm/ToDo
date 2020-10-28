@@ -6,6 +6,7 @@ import {
     StyleSheet,
     Image,
     Dimensions,
+    Alert,
 } from "react-native";
 
 // Styling
@@ -30,6 +31,25 @@ const styles = StyleSheet.create( {
 // Container component for app actions
 export default function ActionBar( props ) {
     
+    const handleDelete = useCallback( () => {
+        Alert.alert(
+            "Delete List",
+            `Are you sure you want to delete this list?`,
+            [
+              {
+                text: "No",
+              },
+              {
+                text: "Yes",
+                onPress: () => {
+                  props.onDelete()
+                },
+                style: "destructive"
+              }
+            ]
+          )
+    } );
+
     return (
         // Container
         <View
@@ -66,8 +86,8 @@ export default function ActionBar( props ) {
             {
             props.onDelete ?
             <TouchableOpacity 
-                onPress={props.onDelete}
-                onLongPress={props.onDelete}
+                onPress={handleDelete}
+                onLongPress={handleDelete}
             >
                 <Image
                     style={styles.icon}
