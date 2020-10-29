@@ -2,7 +2,7 @@
 import React, { useCallback, useState, } from "react";
 import { TextInput, StyleSheet, PixelRatio, Dimensions, } from "react-native";
 import { useFonts } from "expo-font";
-import { Audio } from "expo-av";
+import { playSound } from "../src/SoundUtil";
 
 // Styling
 
@@ -31,17 +31,7 @@ export default function Item( props ) {
             setItemName( text );
             props.onRename( text );
         } else {
-
-            const sound = new Audio.Sound();
-
-            try {
-                await sound.loadAsync( require( "../assets/sounds/error_sound.wav" ) );
-                await sound.playAsync();
-
-                // await sound.unloadAsync();
-            } catch ( e ) {
-                console.error( e ) // TODO Add better error handling
-            }
+            playSound( require( "../assets/sounds/error_sound.wav" )  );
         }
 
     } );
@@ -57,7 +47,7 @@ export default function Item( props ) {
     if ( !loaded ) {
         fontFamily = null;
     }
-    
+
     return (
         <TextInput
             style={{
