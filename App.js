@@ -34,8 +34,7 @@ const styles = StyleSheet.create( {
   }
 } );
 
-// TODO Make the actions more noticable to the user(Sounds/animations)
-// TODO Make app look cleaner
+// TODO Make app look cleaner with animations
 // TODO Consider performance optimizations in the future
 //      Maybe have a useEffect that updates all data when a state variable
 //      is changed.
