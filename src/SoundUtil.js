@@ -19,7 +19,7 @@ export async function playSound( source ) {
         await sound.playAsync();
 
     } catch ( e ) {
-        console.error( e ); // TODO Add better error handling
+        console.error( "Sound error" );
     }
 
 }

@@ -7,6 +7,7 @@ import {
   Platform,
   Dimensions,
   TextInputComponent,
+  Alert,
 } from "react-native"
 import HomeList from "./components/HomeList";
 import List from "./components/List";
@@ -69,13 +70,12 @@ export default function App() {
 
     setSavedLists( newSavedList );
 
-    // TODO Eventually remove boilerplate code 
     // Save data in AsyncStorage
     try {
       await AsyncStorage.setItem( "saved_lists", JSON.stringify( newSavedList ) );
-      await AsyncStorage.setItem( key, JSON.stringify( [] ) );
+      await AsyncStorage.setItem( key, "[]" );
     } catch ( e ) {
-      console.error( e ); // TODO Add better error handling
+      console.error( "Data error" );
     }
 
   } );
@@ -98,14 +98,13 @@ export default function App() {
       playSound( require( "./assets/sounds/paper_crumple.mp3" )  );
 
     } catch ( e ) {
-      console.error( e ); // TODO Add better error handling
+      console.error( "Data error" );
     }
 
   } );
 
   // Create new item
   const newItem = useCallback( async () => {
-    // TODO Remove boilerplate code eventually
     try {
 
       const newListData = listData.concat(
@@ -133,7 +132,7 @@ export default function App() {
       );
 
     } catch ( e ) {
-      console.error( e ); // TODO Add better error handling
+      console.error( "Data error" );
     }
   } );
 
@@ -148,7 +147,7 @@ export default function App() {
     try {
       await AsyncStorage.setItem( list.key, JSON.stringify( listData ) );
     } catch ( e ) {
-      console.error( e ); // TODO Add better error handling
+      console.error( "Data error" );
     }
 
   } );
@@ -168,7 +167,7 @@ export default function App() {
       );
 
     } catch ( e ) {
-      console.error( e ); // TODO Add better error handling
+      console.error( "Data error" );
     }
 
   } );
@@ -183,7 +182,7 @@ export default function App() {
     try {
       await AsyncStorage.setItem( "saved_lists", JSON.stringify( savedLists ) );
     } catch ( e ) {
-      console.error( e ) // TODO Add better error handling
+      console.error( "Data error" );
     }
 
   } );
@@ -201,7 +200,7 @@ export default function App() {
         JSON.stringify( listData )
       );
     } catch ( e ) {
-      console.error( e ); // TODO Add better error handling
+      console.error( "Data error" );
     }
 
   } );
@@ -222,25 +221,16 @@ export default function App() {
         setListData( JSON.parse( data ) );
         setIsHome( false );
       } else {
-        console.error( "List not found" ); // TODO Add better error handling
+        console.error( "Data error" );
       }
 
     } catch ( e ) {
-      console.error( e ); // TODO Add better error handling
+      console.error( "Data error" );
     }
   } );
 
   // Lifecycle
   useEffect( () => {
-
-    // TODO Remove when done testing
-    ( async () => {
-      try {
-        await AsyncStorage.clear();
-      } catch ( e ) {
-        console.error( e );
-      }
-    } )();
 
     ( async () => {
       try {
@@ -254,9 +244,8 @@ export default function App() {
         }
 
       } catch ( e ) {
-        console.error( e ); // TODO Add better error handling
+        console.error( "Data error" );
       }
-
     } )();
 
   }, [] );

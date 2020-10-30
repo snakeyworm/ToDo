@@ -75,7 +75,7 @@ export default function HomeList( props ) {
 
     return ( <ToDoPage 
         header={
-            <Item // TODO Change styling to look more spiffy
+            <Item
                 style={styles.heading}
                 itemName={"ToDo"}
                 editable={false}
