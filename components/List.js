@@ -1,11 +1,13 @@
 
 import React, { useCallback } from "react";
-import { View, FlatList, StyleSheet, Dimensions } from "react-native";
+import { StyleSheet, Dimensions, PixelRatio, } from "react-native";
 import Item from "./Item";
 import CheckableItem from "./CheckableItem";
+import ToDoPage from "./ToDoPage";
 
 // Styling
 
+const width = Dimensions.get( "window" ).width;
 const height = Dimensions.get( "window" ).height;
 
 const styles = StyleSheet.create( {
@@ -15,6 +17,7 @@ const styles = StyleSheet.create( {
         backgroundColor: "#000000",
     },
     heading: {
+        fontSize: PixelRatio.getFontScale() * width * 0.1,
         height: height * 0.1,
     }
 } )
@@ -35,23 +38,18 @@ export default function List( props ) {
         />
     } );
 
-    return (
-        <View
-            style={styles.container}
-        >
-            <Item // TODO Change styling to look more spiffy
+    return ( <ToDoPage
+        header={
+            <Item
                 style={styles.heading}
                 itemName={props.list.name}
                 editable={true}
                 onRename={( newName ) => { props.onListRename( newName ) }}
             />
-            <FlatList
-                style={styles.list}
-                data={props.data}
-                renderItem={handleRender}
-                keyExtractor={getKey}
-            />
-        </View>
-    )
+        }
+        data={props.data}
+        onRender={handleRender}
+        getKey={getKey}
+    /> );
 
 }

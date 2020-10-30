@@ -273,7 +273,7 @@ export default function App() {
       />
       {isHome ?
         <HomeList
-          keys={savedLists}
+          data={savedLists}
           onItemClick={handleItemClick}
         /> :
         <List

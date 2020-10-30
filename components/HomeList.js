@@ -2,10 +2,13 @@
 import React, { useCallback } from "react";
 import { View, Text, FlatList, StyleSheet, TouchableOpacity, PixelRatio, Dimensions } from "react-native";
 import { useFonts } from "expo-font";
+import Item from "./Item";
+import ToDoPage from "./ToDoPage";
 
 // Styling
 
 const width = Dimensions.get( "window" ).width;
+const height = Dimensions.get( "window" ).height;
 
 const styles = StyleSheet.create( {
     list: {
@@ -21,6 +24,10 @@ const styles = StyleSheet.create( {
         textAlign: "left",
         color: "#ffffff",
     },
+    heading: {
+        fontSize: PixelRatio.getFontScale() * width * 0.1,
+        height: height * 0.1,
+    }
 } );
 
 // Component for showing user saved lists
@@ -66,13 +73,18 @@ export default function HomeList( props ) {
 
     } );
 
-    return (
-        <FlatList
-            style={styles.list}
-            data={props.keys}
-            renderItem={handleRender}
-            keyExtractor={getKey}
-        />
-    )
+    return ( <ToDoPage 
+        header={
+            <Item // TODO Change styling to look more spiffy
+                style={styles.heading}
+                itemName={"ToDo"}
+                editable={false}
+            />
+        }
+        data={props.data}
+        onRender={handleRender}
+        getKey={getKey}
+    />)
+    
 
 }
