@@ -19,7 +19,6 @@ import { playSound } from "./src/SoundUtil";
 import { AppLoading } from "expo";
 import { useFonts } from "expo-font";
 
-
 // Constants
 
 const NEW_LIST_NAME = "New list";
@@ -46,7 +45,7 @@ const styles = StyleSheet.create( {
 //      is changed.
 // Main component
 export default function App() {
-
+  
   // State
 
   let [ savedLists, setSavedLists ] = useState( [] );
