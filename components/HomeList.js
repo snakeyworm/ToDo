@@ -1,5 +1,5 @@
 
-import React, { useCallback } from "react";
+import React, { useCallback, useEffect, } from "react";
 import { View, Text, StyleSheet, Animated, PixelRatio, Dimensions } from "react-native";
 import Item from "./Item";
 import ToDoPage from "./ToDoPage";
@@ -25,17 +25,29 @@ const styles = StyleSheet.create( {
     },
     heading: {
         fontSize: PixelRatio.getFontScale() * width * 0.1,
-        height: height * 0.1,
+        fontFamily: "LemonMilk",
+        color: "#ffffff",
     }
 } );
 
 // Component for showing user saved lists
 export default function HomeList( props ) {
 
+    const opacity = new Animated.Value( 0 );
+
     const getKey = useCallback( ( _, index ) =>
         `${index}`
     );
 
+    useEffect( () => {
+
+        Animated.timing( opacity, {
+            toValue: 1,
+            timing: 2000,
+        } ).start();
+
+    }, [] );
+    
     // Render list
     const handleRender = useCallback( ( { item } ) => {
 
@@ -63,11 +75,20 @@ export default function HomeList( props ) {
 
     return ( <ToDoPage 
         header={
-            <Item
-                style={styles.heading}
-                itemName={"ToDo"}
-                editable={false}
-            />
+            <Animated.Text
+                style={{
+                    ...styles.heading,
+                    opacity,
+                    transform: [ {
+                        translateX : opacity.interpolate( {
+                            inputRange: [ 0, 1 ],
+                            outputRange: [ width, 0 ],
+                        } )
+                    } ],
+                }}
+            >
+            TODO
+            </Animated.Text>
         }
         data={props.data}
         onRender={handleRender}
