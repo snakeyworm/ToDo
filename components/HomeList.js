@@ -1,6 +1,6 @@
 
 import React, { useCallback } from "react";
-import { View, Text, FlatList, StyleSheet, TouchableOpacity, PixelRatio, Dimensions } from "react-native";
+import { View, Text, StyleSheet, Animated, PixelRatio, Dimensions } from "react-native";
 import { useFonts } from "expo-font";
 import Item from "./Item";
 import ToDoPage from "./ToDoPage";
@@ -33,6 +33,8 @@ const styles = StyleSheet.create( {
 // Component for showing user saved lists
 export default function HomeList( props ) {
 
+    const opacity = new Animated.Value( 0 );
+
     const getKey = useCallback( ( _, index ) =>
         `${index}`
     );
@@ -57,17 +59,23 @@ export default function HomeList( props ) {
         return (
             <View
                 onStartShouldSetResponder={() => true}
-                onResponderGrant={() => {}} // TODO Maybe add a touch animation here
+                onResponderGrant={() => {
+                    Animated.timing( opacity, {
+                        toValue: 1,
+                        timing: 1000,
+                    } );
+                }} // TODO Maybe add a touch animation here
                 onResponderRelease={onItemClick}
                 style={styles.itemContainer}
             >
-                <Text 
-                style={{
-                    ...styles.itemText,
-                    fontFamily,
-                }}>
+                <Animated.Text 
+                    style={{
+                        ...styles.itemText,
+                        opacity,
+                        fontFamily,
+                    }}>
                     {item.name}
-                </Text>
+                </Animated.Text>
             </View>
         );
 
