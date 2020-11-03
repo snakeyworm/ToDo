@@ -16,6 +16,9 @@ import UserList from "./src/UserList";
 import UserItem from "./src/UserItem";
 import AsyncStorage from "@react-native-community/async-storage";
 import { playSound } from "./src/SoundUtil";
+import { AppLoading } from "expo";
+import { useFonts } from "expo-font";
+
 
 // Constants
 
@@ -25,6 +28,7 @@ const NEW_ITEM_NAME = "New item";
 // Styling
 
 const height = Dimensions.get( "window" ).height;
+let fontFamily = "LemonMilk";
 
 const styles = StyleSheet.create( {
   container: {
@@ -35,6 +39,7 @@ const styles = StyleSheet.create( {
   }
 } );
 
+// TODO Load LemonMilk font and pass as context
 // TODO Make app look cleaner with animations
 // TODO Consider performance optimizations in the future
 //      Maybe have a useEffect that updates all data when a state variable
@@ -53,6 +58,12 @@ export default function App() {
   let [ isHome, setIsHome ] = useState( true );
 
   const [ reRender, setReRender ] = useState( false );
+
+  // Font
+
+  let [ loaded, error ] = useFonts( {
+    "LemonMilk": require( "./assets/fonts/LemonMilkRegular-X3XE2.otf" ),
+  } );
 
   // Event handlers
 
@@ -95,7 +106,7 @@ export default function App() {
       await AsyncStorage.removeItem( key );
       await AsyncStorage.setItem( "saved_lists", JSON.stringify( savedLists ) );
 
-      playSound( require( "./assets/sounds/paper_crumple.mp3" )  );
+      playSound( require( "./assets/sounds/paper_crumple.mp3" ) );
 
     } catch ( e ) {
       console.error( "Data error" );
@@ -232,6 +243,15 @@ export default function App() {
   // Lifecycle
   useEffect( () => {
 
+    // TODO Remove when done testing
+    ( async () => {
+      try {
+        await AsyncStorage.clear();
+      } catch ( e ) {
+        console.error( "Data error" );
+      }
+    } )();
+
     ( async () => {
       try {
 
@@ -250,7 +270,7 @@ export default function App() {
 
   }, [] );
 
-  return (
+  return loaded ? (
     // Container
     <KeyboardAvoidingView
       behavior={Platform.OS == "ios" ? "padding" : null}
@@ -280,6 +300,6 @@ export default function App() {
         onDelete={isHome ? null : deleteList}
       />
     </KeyboardAvoidingView>
-  );
+  ) : <AppLoading />;
 
 }

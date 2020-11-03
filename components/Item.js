@@ -36,28 +36,16 @@ export default function Item( props ) {
 
     } );
 
-    // Load fonts
-
-    let [ loaded, error ] = useFonts( {
-        LemonMilk: require( "../assets/fonts/LemonMilkRegular-X3XE2.otf" )
-    } );
-
-    let fontFamily = "LemonMilk";
-
-    if ( !loaded ) {
-        fontFamily = null;
-    }
-
     return (
         <TextInput
             style={{
                 ...styles.itemText,
-                fontFamily,
+                fontFamily: "LemonMilk",
                 ...props.style,
             }}
             editable={props.editable}
             onChangeText={handleTextChange}
-            value={loaded ? itemName : error}
+            value={itemName}
         />
     );
 

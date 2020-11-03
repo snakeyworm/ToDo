@@ -1,7 +1,6 @@
 
 import React, { useCallback } from "react";
 import { View, Text, StyleSheet, Animated, PixelRatio, Dimensions } from "react-native";
-import { useFonts } from "expo-font";
 import Item from "./Item";
 import ToDoPage from "./ToDoPage";
 
@@ -33,21 +32,9 @@ const styles = StyleSheet.create( {
 // Component for showing user saved lists
 export default function HomeList( props ) {
 
-    const opacity = new Animated.Value( 0 );
-
     const getKey = useCallback( ( _, index ) =>
         `${index}`
     );
-
-    let [ loaded, error ] = useFonts( {
-        LemonMilk: require( "../assets/fonts/LemonMilkRegular-X3XE2.otf" )
-    } );
-
-    let fontFamily = "LemonMilk";
-
-    if ( !loaded ) {
-        fontFamily = null;
-    }
 
     // Render list
     const handleRender = useCallback( ( { item } ) => {
@@ -59,23 +46,16 @@ export default function HomeList( props ) {
         return (
             <View
                 onStartShouldSetResponder={() => true}
-                onResponderGrant={() => {
-                    Animated.timing( opacity, {
-                        toValue: 1,
-                        timing: 1000,
-                    } );
-                }} // TODO Maybe add a touch animation here
                 onResponderRelease={onItemClick}
                 style={styles.itemContainer}
             >
-                <Animated.Text 
+                <Text 
                     style={{
                         ...styles.itemText,
-                        opacity,
-                        fontFamily,
+                        fontFamily: "LemonMilk",
                     }}>
                     {item.name}
-                </Animated.Text>
+                </Text>
             </View>
         );
 
