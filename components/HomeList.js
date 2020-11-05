@@ -39,11 +39,13 @@ export default function HomeList( props ) {
         `${index}`
     );
 
+    // Opening animation
     useEffect( () => {
 
         Animated.timing( opacity, {
             toValue: 1,
             timing: 2000,
+            useNativeDriver: true,
         } ).start();
 
     }, [] );
@@ -86,8 +88,7 @@ export default function HomeList( props ) {
                         } )
                     } ],
                 }}
-            >
-            TODO
+            >TODO
             </Animated.Text>
         }
         data={props.data}

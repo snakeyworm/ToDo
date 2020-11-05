@@ -38,8 +38,8 @@ const styles = StyleSheet.create( {
   }
 } );
 
-// TODO Load LemonMilk font and pass as context
 // TODO Make app look cleaner with animations
+// TODO Ensure a portable layout on all devices
 // TODO Consider performance optimizations in the future
 //      Maybe have a useEffect that updates all data when a state variable
 //      is changed.
