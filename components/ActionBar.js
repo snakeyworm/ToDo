@@ -17,9 +17,8 @@ const width = Dimensions.get( "window" ).width;
 const height = Dimensions.get( "window" ).height;
 
 const ICON_SIZE = height * 0.15 / 2; // Parent flex * Scale factor
-// 0.877
-const HL_BUTTONS_MAX_Y = (1 - 0.23) * height;//1050;//585; // Max Y for HomeList button view
-const L_BUTTONS_MAX_Y = (1 - 0.23) * height;//450; // Max Y for HomeList button view
+const HL_BUTTONS_MAX_Y = ( 1 - 0.23 ) * height + ICON_SIZE;// Max Y for HomeList button view
+const L_BUTTONS_MAX_Y = ( 1 - 0.23 ) * height;// Max Y for HomeList button view
 
 const styles = StyleSheet.create( {
     container: {
@@ -30,7 +29,7 @@ const styles = StyleSheet.create( {
     },
     buttonContainer: {
         position: "absolute",
-        height: height*0.15, // Parent flex * Scale factor for two icons
+        height: height * 0.15, // Parent flex * Scale factor for two icons
     },
     icon: {
         width: ICON_SIZE,
@@ -41,7 +40,7 @@ const styles = StyleSheet.create( {
 // Container component for app actions
 export default function ActionBar( props ) {
 
-    let opacity = useRef( new Animated.Value( 0 ) );
+    let opacity = useRef( new Animated.Value( 0 ) ).current;
 
     const handleDelete = useCallback( () => {
         Alert.alert(
@@ -65,11 +64,11 @@ export default function ActionBar( props ) {
     // Opening animation
     useEffect( () => {
 
-        opacity.current.setValue( 0 );
+        opacity.setValue( 0 );
 
-        Animated.timing( opacity.current, {
+        Animated.timing( opacity, {
             toValue: 1,
-            timing: 2000,
+            timing: 4000,
             useNativeDriver: true,
         } ).start();
 
@@ -109,11 +108,11 @@ export default function ActionBar( props ) {
             <Animated.View style={{
                 ...styles.buttonContainer,
                 transform: [ {
-                    translateY: opacity.current.interpolate( {
+                    translateY: opacity.interpolate( {
                         inputRange: [ 0, 1, ],
-                        outputRange: [ 
+                        outputRange: [
                             0,
-                            props.onDelete ? L_BUTTONS_MAX_Y : HL_BUTTONS_MAX_Y, // TODO Fix HomeList/List views
+                            props.onDelete ? L_BUTTONS_MAX_Y : HL_BUTTONS_MAX_Y,
                         ],
                     } ),
                 } ],
@@ -134,7 +133,7 @@ export default function ActionBar( props ) {
                         </AnimatedTouchableOpacity> :
                         null
                 }
-                 <AnimatedTouchableOpacity
+                <AnimatedTouchableOpacity
                     onPress={props.onPlus}
                     onLongPress={props.onPlus}
                     style={{
