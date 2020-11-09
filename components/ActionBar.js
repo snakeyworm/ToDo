@@ -1,5 +1,5 @@
 
-import React, { useState, useCallback, useEffect, } from "react";
+import React, { useState, useRef, useCallback, useEffect, } from "react";
 import {
     View,
     TouchableOpacity,
@@ -8,6 +8,7 @@ import {
     Dimensions,
     Alert,
     Animated,
+    PixelRatio
 } from "react-native";
 
 // Styling
@@ -15,10 +16,10 @@ import {
 const width = Dimensions.get( "window" ).width;
 const height = Dimensions.get( "window" ).height;
 
-const ICON_SIZE = width * 0.15 * 0.75; // Parent flex * Scale factor
-
-const HL_BUTTONS_MAX_Y = height - height * 0.12; // Max Y for HomeList button view
-const L_BUTTONS_MAX_Y = height - height * 0.12 - height * 0.02 - height * 0.12; // Max Y for List button view
+const ICON_SIZE = height * 0.15 / 2; // Parent flex * Scale factor
+// 0.877
+const HL_BUTTONS_MAX_Y = (1 - 0.23) * height;//1050;//585; // Max Y for HomeList button view
+const L_BUTTONS_MAX_Y = (1 - 0.23) * height;//450; // Max Y for HomeList button view
 
 const styles = StyleSheet.create( {
     container: {
@@ -28,7 +29,8 @@ const styles = StyleSheet.create( {
         borderRadius: width * 0.05,
     },
     buttonContainer: {
-        // height: iconSize * 2, // Parent flex * Scale factor for two icons
+        position: "absolute",
+        height: height*0.15, // Parent flex * Scale factor for two icons
     },
     icon: {
         width: ICON_SIZE,
@@ -39,8 +41,7 @@ const styles = StyleSheet.create( {
 // Container component for app actions
 export default function ActionBar( props ) {
 
-    let updateAnim = useState( false );
-    let opacity = new Animated.Value( 0 );
+    let opacity = useRef( new Animated.Value( 0 ) );
 
     const handleDelete = useCallback( () => {
         Alert.alert(
@@ -61,20 +62,24 @@ export default function ActionBar( props ) {
         )
     } );
 
-    // TODO Fix animation so it only runs when pages are switched
     // Opening animation
     useEffect( () => {
 
-        Animated.timing( opacity, {
+        opacity.current.setValue( 0 );
+
+        Animated.timing( opacity.current, {
             toValue: 1,
             timing: 2000,
             useNativeDriver: true,
         } ).start();
 
-    }, [ updateAnim ] );
+    }, [ props.isHome ] );
 
     // Animatable TouchableOpacity
     const AnimatedTouchableOpacity = Animated.createAnimatedComponent( TouchableOpacity );
+
+    // console.log( `width: ${width}, height: ${height}, ICON_SIZE: ${ICON_SIZE}` );
+    // console.log( ICON_SIZE );
 
     return (
         // Container
@@ -104,7 +109,7 @@ export default function ActionBar( props ) {
             <Animated.View style={{
                 ...styles.buttonContainer,
                 transform: [ {
-                    translateY: opacity.interpolate( {
+                    translateY: opacity.current.interpolate( {
                         inputRange: [ 0, 1, ],
                         outputRange: [ 
                             0,

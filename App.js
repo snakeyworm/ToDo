@@ -294,6 +294,7 @@ export default function App() {
         />
       }
       <ActionBar
+        isHome={isHome}
         onPlus={isHome ? newList : newItem}
         onHome={isHome ? null : handleHome}
         onDelete={isHome ? null : deleteList}
