@@ -82,7 +82,7 @@ export default function HomeList( props ) {
                     ...styles.heading,
                     opacity,
                     transform: [ {
-                        translateX : opacity.interpolate( {
+                        translateX: opacity.interpolate( {
                             inputRange: [ 0, 1 ],
                             outputRange: [ width, 0 ],
                         } )

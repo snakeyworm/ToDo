@@ -1,6 +1,6 @@
 
-import React, { useCallback } from "react";
-import { StyleSheet, Dimensions, PixelRatio, } from "react-native";
+import React, { useCallback, useRef, useEffect } from "react";
+import { StyleSheet, Dimensions, PixelRatio, Animated, } from "react-native";
 import Item from "./Item";
 import CheckableItem from "./CheckableItem";
 import ToDoPage from "./ToDoPage";
@@ -18,12 +18,15 @@ const styles = StyleSheet.create( {
     },
     heading: {
         fontSize: PixelRatio.getFontScale() * width * 0.1,
-        height: height * 0.1,
     }
-} )
+} );
 
 // Component for rending user items
 export default function List( props ) {
+
+    const opacity = useRef( new Animated.Value( 0 ) ).current;
+
+    // Callbacks
 
     const getKey = useCallback( ( item ) => `${item.UUID}` );
 
@@ -38,14 +41,37 @@ export default function List( props ) {
         />
     } );
 
+      // Opening animation
+      useEffect( () => {
+
+        Animated.timing( opacity, {
+            toValue: 1,
+            timing: 2000,
+            useNativeDriver: true,
+        } ).start();
+
+    }, [] );
+
     return ( <ToDoPage
         header={
-            <Item
-                style={styles.heading}
-                itemName={props.list.name}
-                editable={true}
-                onRename={( newName ) => { props.onListRename( newName ) }}
-            />
+            <Animated.View
+                style={{
+                    opacity,
+                    transform: [ {
+                        translateX: opacity.interpolate( {
+                            inputRange: [ 0, 1 ],
+                            outputRange: [ width, 0],
+                        } )
+                    } ]
+                }}
+            >
+                <Item
+                    style={styles.heading}
+                    itemName={props.list.name}
+                    editable={true}
+                    onRename={( newName ) => { props.onListRename( newName ) }}
+                />
+            </Animated.View>
         }
         data={props.data}
         onRender={handleRender}

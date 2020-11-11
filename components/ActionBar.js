@@ -37,6 +37,9 @@ const styles = StyleSheet.create( {
     },
 } );
 
+// Animatable TouchableOpacity
+const AnimatedTouchableOpacity = Animated.createAnimatedComponent( TouchableOpacity );
+
 // Container component for app actions
 export default function ActionBar( props ) {
 
@@ -73,12 +76,6 @@ export default function ActionBar( props ) {
         } ).start();
 
     }, [ props.isHome ] );
-
-    // Animatable TouchableOpacity
-    const AnimatedTouchableOpacity = Animated.createAnimatedComponent( TouchableOpacity );
-
-    // console.log( `width: ${width}, height: ${height}, ICON_SIZE: ${ICON_SIZE}` );
-    // console.log( ICON_SIZE );
 
     return (
         // Container

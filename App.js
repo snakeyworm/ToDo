@@ -153,6 +153,8 @@ export default function App() {
     setListData( listData );
     setReRender( !reRender ); // Force re-render
 
+    playSound( require( "./assets/sounds/swoosh.wav" ) );
+
     // Delete item in AsyncStorage
     try {
       await AsyncStorage.setItem( list.key, JSON.stringify( listData ) );
