@@ -3,6 +3,7 @@ import React, { useCallback, useEffect, } from "react";
 import { View, Text, StyleSheet, Animated, PixelRatio, Dimensions } from "react-native";
 import Item from "./Item";
 import ToDoPage from "./ToDoPage";
+import { playSound } from "../src/SoundUtil";
 
 // Styling
 
@@ -49,33 +50,56 @@ export default function HomeList( props ) {
         } ).start();
 
     }, [] );
-    
+
     // Render list
-    const handleRender = useCallback( ( { item } ) => {
+    const handleRender = useCallback( ( { item, index } ) => {
 
         const onItemClick = () => {
             props.onItemClick( item )
         };
 
-        return (
-            <View
-                onStartShouldSetResponder={() => true}
-                onResponderRelease={onItemClick}
-                style={styles.itemContainer}
+        let itemComponent = <View
+            onStartShouldSetResponder={() => true}
+            onResponderRelease={onItemClick}
+            style={styles.itemContainer}
+        >
+            <Text
+                style={{
+                    ...styles.itemText,
+                    fontFamily: "LemonMilk",
+                }}>
+                {item.name}
+            </Text>
+        </View>;
+
+        // Play add animation if is a new item
+        if ( index === props.data.length - 1 ) {
+
+            const x = new Animated.Value( width );
+
+            Animated.timing( x, {
+                toValue: 0,
+                timing: 2000,
+                useNativeDriver: true,
+            } ).start();
+
+            itemComponent = <Animated.View
+                style={{
+                    transform: [ {
+                        translateX: x,
+                    } ],
+                }}
             >
-                <Text 
-                    style={{
-                        ...styles.itemText,
-                        fontFamily: "LemonMilk",
-                    }}>
-                    {item.name}
-                </Text>
-            </View>
-        );
+                {itemComponent}
+            </Animated.View>
+
+        }
+
+        return itemComponent;
 
     } );
 
-    return ( <ToDoPage 
+    return ( <ToDoPage
         header={
             <Animated.Text
                 style={{
@@ -94,7 +118,7 @@ export default function HomeList( props ) {
         data={props.data}
         onRender={handleRender}
         getKey={getKey}
-    />)
-    
+    /> )
+
 
 }

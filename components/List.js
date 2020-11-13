@@ -30,19 +30,46 @@ export default function List( props ) {
 
     const getKey = useCallback( ( item ) => `${item.UUID}` );
 
-    const handleRender = useCallback( ( { item } ) => {
-        return <CheckableItem
+    const handleRender = useCallback( ( { item, index } ) => {
+
+        let itemComponent = <CheckableItem
             itemName={item.name}
             checked={item.checked}
             editable={true}
             onLongPress={() => { props.onDeleteItem( item ) }}
             onRename={( newName ) => { props.onItemRename( item, newName ) }}
             onCheck={() => { props.onCheck( item ) }}
-        />
+        />;
+
+        // Play add animation if is a new item
+        if ( index === props.data.length - 1 ) {
+
+            const x = new Animated.Value( width );
+
+            Animated.timing( x, {
+                toValue: 0,
+                timing: 2000,
+                useNativeDriver: true,
+            } ).start();
+
+            itemComponent = <Animated.View
+                style={{
+                    transform: [ {
+                        translateX: x,
+                    } ],
+                }}
+            >
+                {itemComponent}
+            </Animated.View>
+
+        }
+
+        return itemComponent;
+
     } );
 
-      // Opening animation
-      useEffect( () => {
+    // Opening animation
+    useEffect( () => {
 
         Animated.timing( opacity, {
             toValue: 1,
@@ -60,7 +87,7 @@ export default function List( props ) {
                     transform: [ {
                         translateX: opacity.interpolate( {
                             inputRange: [ 0, 1 ],
-                            outputRange: [ width, 0],
+                            outputRange: [ width, 0 ],
                         } )
                     } ]
                 }}
