@@ -24,6 +24,8 @@ const styles = StyleSheet.create( {
 // Component for rending user items
 export default function List( props ) {
 
+    console.log( props.itemAdded );
+
     const opacity = useRef( new Animated.Value( 0 ) ).current;
 
     // Callbacks
@@ -42,7 +44,7 @@ export default function List( props ) {
         />;
 
         // Play add animation if is a new item
-        if ( index === props.data.length - 1 ) {
+        if ( props.itemAdded && index === props.data.length - 1 ) {
 
             const x = new Animated.Value( width );
 

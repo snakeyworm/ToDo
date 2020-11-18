@@ -1,5 +1,5 @@
 
-import React, { useCallback, useEffect, useState, } from "react";
+import React, { useCallback, useEffect, useRef, useState, } from "react";
 import {
   StyleSheet,
   StatusBar,
@@ -52,6 +52,8 @@ export default function App() {
 
   let [ list, setList ] = useState( {} );
   let [ listData, setListData ] = useState( [] );
+
+  const itemAdded = useRef( false );
 
   // Is user on homescreen
   let [ isHome, setIsHome ] = useState( true );
@@ -128,6 +130,8 @@ export default function App() {
       list.nextUUID++;
 
       setListData( newListData );
+      console.log( "To true" );
+      itemAdded.current = true;
 
       // Save list in storage
       await AsyncStorage.setItem(
@@ -271,6 +275,15 @@ export default function App() {
 
   }, [] );
 
+  useEffect( () => {
+
+    return () => {
+      console.log( "To false" );
+      itemAdded.current = false;
+    }
+
+  }, [ listData ] );
+
   return loaded ? (
     // Container
     <KeyboardAvoidingView
@@ -289,6 +302,7 @@ export default function App() {
         <List
           list={list}
           data={listData}
+          itemAdded={itemAdded.current}
           onDeleteItem={deleteItem}
           onListRename={renameList}
           onItemRename={renameItem}
