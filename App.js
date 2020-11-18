@@ -81,6 +81,7 @@ export default function App() {
     ] );
 
     setSavedLists( newSavedList );
+    itemAdded.current = true;
 
     // Save data in AsyncStorage
     try {
@@ -282,7 +283,7 @@ export default function App() {
       itemAdded.current = false;
     }
 
-  }, [ listData ] );
+  }, [ listData, savedLists ] );
 
   return loaded ? (
     // Container
@@ -298,6 +299,7 @@ export default function App() {
         <HomeList
           data={savedLists}
           onItemClick={handleItemClick}
+          itemAdded={itemAdded.current}
         /> :
         <List
           list={list}

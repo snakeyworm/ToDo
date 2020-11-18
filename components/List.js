@@ -24,8 +24,6 @@ const styles = StyleSheet.create( {
 // Component for rending user items
 export default function List( props ) {
 
-    console.log( props.itemAdded );
-
     const opacity = useRef( new Animated.Value( 0 ) ).current;
 
     // Callbacks
@@ -48,7 +46,7 @@ export default function List( props ) {
 
             const x = new Animated.Value( width );
 
-            Animated.timing( x, {
+            Animated.spring( x, {
                 toValue: 0,
                 timing: 2000,
                 useNativeDriver: true,
@@ -73,7 +71,7 @@ export default function List( props ) {
     // Opening animation
     useEffect( () => {
 
-        Animated.timing( opacity, {
+        Animated.spring( opacity, {
             toValue: 1,
             timing: 2000,
             useNativeDriver: true,

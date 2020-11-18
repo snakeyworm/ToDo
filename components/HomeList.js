@@ -43,7 +43,7 @@ export default function HomeList( props ) {
     // Opening animation
     useEffect( () => {
 
-        Animated.timing( opacity, {
+        Animated.spring( opacity, {
             toValue: 1,
             timing: 2000,
             useNativeDriver: true,
@@ -73,11 +73,11 @@ export default function HomeList( props ) {
         </View>;
 
         // Play add animation if is a new item
-        if ( index === props.data.length - 1 ) {
+        if ( props.itemAdded && index === props.data.length - 1 ) {
 
             const x = new Animated.Value( width );
 
-            Animated.timing( x, {
+            Animated.spring( x, {
                 toValue: 0,
                 timing: 2000,
                 useNativeDriver: true,
