@@ -27,7 +27,7 @@ export default function Item( props ) {
     const handleTextChange = useCallback( async ( text ) => {
 
         // Set text if conditions are met
-        if ( text == "" || text.trim() !== "" ) {
+        if ( !props.allowEmpty && ( text == "" || text.trim() == "" ) ) {
             setItemName( text );
         } else if ( text.length < 25  ) {
             setItemName( text );

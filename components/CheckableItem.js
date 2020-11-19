@@ -67,6 +67,7 @@ export default function CheckableItem( props ) {
                 itemName={props.itemName}
                 editable={props.editable}
                 onRename={props.onRename}
+                allowEmpty={true}
             />
         </View>
     );

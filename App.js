@@ -22,7 +22,7 @@ import { useFonts } from "expo-font";
 // Constants
 
 const NEW_LIST_NAME = "New list";
-const NEW_ITEM_NAME = "New item";
+const NEW_ITEM_NAME = "";
 
 // Styling
 
