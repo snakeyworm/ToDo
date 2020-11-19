@@ -38,7 +38,6 @@ const styles = StyleSheet.create( {
   }
 } );
 
-// TODO Ensure a portable layout on all devices
 // Main component
 export default function App() {
   
