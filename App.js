@@ -244,15 +244,7 @@ export default function App() {
   // Lifecycle
   useEffect( () => {
 
-    // TODO Remove when done testing
-    ( async () => {
-      try {
-        await AsyncStorage.clear();
-      } catch ( e ) {
-        console.error( "Data error" );
-      }
-    } )();
-
+    // Load user data
     ( async () => {
       try {
 
