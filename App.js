@@ -38,11 +38,7 @@ const styles = StyleSheet.create( {
   }
 } );
 
-// TODO Add more sounds and animations
 // TODO Ensure a portable layout on all devices
-// TODO Consider performance optimizations in the future
-//      Maybe have a useEffect that updates all data when a state variable
-//      is changed.
 // Main component
 export default function App() {
   
@@ -53,6 +49,7 @@ export default function App() {
   let [ list, setList ] = useState( {} );
   let [ listData, setListData ] = useState( [] );
 
+  // If is true relay itemAdded event to List/HomeList
   const itemAdded = useRef( false );
 
   // Is user on homescreen
@@ -131,7 +128,6 @@ export default function App() {
       list.nextUUID++;
 
       setListData( newListData );
-      console.log( "To true" );
       itemAdded.current = true;
 
       // Save list in storage
@@ -276,10 +272,10 @@ export default function App() {
 
   }, [] );
 
+  // Reset the itemAdded event state
   useEffect( () => {
 
     return () => {
-      console.log( "To false" );
       itemAdded.current = false;
     }
 

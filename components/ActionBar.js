@@ -45,6 +45,7 @@ export default function ActionBar( props ) {
 
     let opacity = useRef( new Animated.Value( 0 ) ).current;
 
+    // Prompt user to confirm delete
     const handleDelete = useCallback( () => {
         Alert.alert(
             "Delete List",
@@ -67,13 +68,16 @@ export default function ActionBar( props ) {
     // Opening animation
     useEffect( () => {
 
-        opacity.setValue( 0 );
-
         Animated.timing( opacity, {
             toValue: 1,
-            timing: 4000,
+            duration: 600,
             useNativeDriver: true,
         } ).start();
+
+        // Reset opacity
+        return () => {
+            opacity.setValue( 0 )
+        }
 
     }, [ props.isHome ] );
 
