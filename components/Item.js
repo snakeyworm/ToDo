@@ -10,7 +10,7 @@ const width = Dimensions.get( "window" ).width;
 
 const styles = StyleSheet.create( {
     itemText: {
-        fontSize: PixelRatio.getFontScale() * width * 0.075,
+        fontSize: PixelRatio.getFontScale() * width * 0.07,
         textAlign: "left",
         color: "#ffffff",
     }
